@@ -1,0 +1,74 @@
+@extends('ui.app')
+
+@section('title', 'Sewa Lahan Pertanian Kini Mudah dan Cepat')
+
+@section('content')
+<div class="album py-5">
+    <div class="container">
+
+        <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="10000">
+                    <img src="{{ URL::asset('assets/img/sawah-satu.jpeg') }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block text-white">
+                        <h5>First slide label</h5>
+                        <p>Some representative placeholder content for the first slide.</p>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                    <img src="{{ URL::asset('assets/img/sawah-dua.jpeg') }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block text-white">
+                        <h5>First slide label</h5>
+                        <p>Some representative placeholder content for the first slide.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ URL::asset('assets/img/sawah-tiga.jpeg') }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block text-white">
+                        <h5>First slide label</h5>
+                        <p>Some representative placeholder content for the first slide.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev carousel-control" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next carousel-control" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+
+        <div class="row row-cols-1 mt-5 row-cols-sm-2 row-cols-md-3 g-3">
+        @foreach($ads as $ad) <div class="col">
+            <div class="card shadow-sm">
+                <img src="{{ asset('ads/' . $ad->picture_one) }}" class="card-img-top" alt="{{ $ad->title }}">
+                <div class="card-body">
+                    <h4><b>{{ $ad->title }}</b></h4>
+                    <ul class="mt-3">
+                        <li>Perkebunan</li>
+                        <li>Luas {{ $ad->large }}</li>
+                        <li>Rp. {{ $ad->price }} / {{ $ad->period }}</li>
+                    </ul>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="btn-group">
+                            <a href="{{ url('/ads/detail/' . $ad->id) }}" class="btn btn-sm btn-outline-secondary">Lihat Selengkapnya</a>
+                            <a href="#" class="btn btn-sm {{ ($ad->condition == 0) ? 'btn-primary' : 'btn-danger' }} }}">{{ ($ad->condition == 0) ? "Tersedia" : "Tersewa" }}</a>
+                        </div>
+                        <small class="text-muted">{{ Carbon\Carbon::parse($ad->created_at)->diffForHumans() }}</small>
+                    </div>
+                </div>
+            </div>
+    </div>
+    @endforeach
+    </div>
+</div>
+</div>
+@endsection

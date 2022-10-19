@@ -13,14 +13,15 @@
     <p class="alert alert-danger mt-3">{{ $err }}</p>
     @endforeach
     @endif
-    <form class="mt-3">
+    <form class="mt-3" action="{{ route('login.authenticate') }}" method="POST">
+        @csrf
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Username</label>
-            <input type="email" class="form-control" required>
+            <input type="email" name="email" class="form-control" required>
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" required>
+            <input type="password" name="password" class="form-control" required>
         </div>
         <p>Belum Punya Akun? <a href="{{ url('/register') }}">Daftar Sekarang!</a></p>
         <button type="submit" class="btn btn-primary">Login</button>

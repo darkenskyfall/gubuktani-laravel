@@ -93,11 +93,24 @@
         <h5>Harga Sewa</h5>
         <p>Rp. 1.000.000/Tahun</p>
 
+        <div class="paragraphs mt-5">
+            <div class="row">
+                <div class="span4">
+                    <div class="clearfix content-heading">
+                    <img style="float:left" src="{{ asset('profiles/' . $user->profile_picture) }}" alt="{{ $user->fname }}" class="img-thumbnail rounded-circle me-2">
+                    <h3><b>{{ $user->fname . " " . $user->lname}}</b></h3>
+                    <p style="font-size: 20px;"><b>{{ $user->address }}</b> • {{ $user->phone }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="mt-5">
             <button class="btn btn-danger mb-3">Wishlist</button>
             <button class="btn btn-primary mb-3">Booking</button>
             <button class="btn btn-light mb-3">Sewa</button>
         </div>
+
 
     </div>
 </div>

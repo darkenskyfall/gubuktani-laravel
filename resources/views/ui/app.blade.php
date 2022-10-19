@@ -86,6 +86,12 @@
         height: 15vw;
         object-fit: cover;
     }
+
+    .img-thumbnail{
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+    }
 </style>
 
 <body>
@@ -105,12 +111,19 @@
                         <a class="nav-link text-white" href="{{ url('/ads/create') }}"">Pasang Iklan</a>
                     </li>
                     <li class=" nav-item">
-                            <a class="nav-link text-white" href="{{ url('/login') }}">Login</a>
+                        @if(Auth::guard('web')->check())
+                        <a class="nav-link text-white" href="#">Halo {{ Auth::guard('web')->user()->fname  }}</a>
+                        @else
+                        <a class="nav-link text-white" href="{{ url('/login') }}">Login</a>
+                        @endif
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-primary" type="submit">Search</button>
+                    <button class="btn btn-primary me-2" type="submit">Search</button>
+                    @if(Auth::guard('web')->check())
+                        <a class="btn btn-danger" type="submit">Logout</a>
+                    @endif
                 </form>
             </div>
         </div>

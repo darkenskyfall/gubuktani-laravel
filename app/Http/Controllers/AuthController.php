@@ -5,9 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Customers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::guard('web')->attempt($credentials)) {
+            $request->session()->regenerate();
+ 
+            return redirect()->route('home');
+        }
+ 
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +35,9 @@ class AuthController extends Controller
      */
     public function login()
     {
+        if (Auth::guard('web')->check()){
+            return redirect()->route('home');
+        }
         return view('ui.login');
     }
 
@@ -58,10 +81,6 @@ class AuthController extends Controller
         $user->save();
 
         return redirect()->route('login')->with('success', 'Registrasi Berhasil. Silakan Login!');
-    }
-
-    public function authenticate(){
-        ///
     }
 
     /**
@@ -119,4 +138,15 @@ class AuthController extends Controller
     {
         //
     }
+
+    public function logout(Request $request){
+        Auth::logout();
+ 
+        $request->session()->invalidate();
+    
+        $request->session()->regenerateToken();
+    
+        return redirect()->route('login');
+    }
+
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ads;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class AdsController extends Controller
 {
@@ -73,7 +74,7 @@ class AdsController extends Controller
         $request->picture_four->move(public_path('ads'), $picture_four);
 
         $user = new Ads([
-            'id_user' => 1,
+            'id_user' => Auth::guard('web')->user()->id,
             'id_category' => $request->id_category,
             'title' => $request->title,
             'address' => $request->address,
@@ -112,7 +113,8 @@ class AdsController extends Controller
     public function show($id)
     {
         $ad = DB::table('ads')->find($id);
-        return view('ui.detail', ['ad' => $ad]);
+        $user = DB::table('customers')->find($ad->id_user);
+        return view('ui.detail', ['ad' => $ad, 'user' => $user]);
     }
 
     /**

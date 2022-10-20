@@ -27,7 +27,11 @@ class AdsController extends Controller
      */
     public function create()
     {
-        return view('ui.add');
+        if (!(Auth::guard('web')->check())){
+            return redirect()->route('login');
+        }
+        $cats = DB::table('categories')->get();
+        return view('ui.add', ['cats' => $cats]);
     }
 
     /**
@@ -148,6 +152,8 @@ class AdsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Ads::find($id);
+        $data->delete();
+        return redirect()->route('profile')->with('success', 'Data berhasil dihapus!');
     }
 }

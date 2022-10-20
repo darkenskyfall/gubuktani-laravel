@@ -35,7 +35,7 @@ class AuthController extends Controller
      */
     public function login()
     {
-        if (Auth::guard('web')->check()){
+        if ((Auth::guard('web')->check())){
             return redirect()->route('home');
         }
         return view('ui.login');

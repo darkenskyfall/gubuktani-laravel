@@ -71,7 +71,7 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tag"></i></div>
                             Kategori
                         </a>
-                        <a class="nav-link" href="tables.html">
+                        <a class="nav-link" href="{{ route('feedback') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Umpan Balik
                         </a>

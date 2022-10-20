@@ -2,30 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ads;
+use App\Models\Customers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LoginAdminController extends Controller
+class ProfileController extends Controller
 {
-
-    public function authenticate(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
-        if (Auth::guard('admin')->attempt($credentials)) {
-            $request->session()->regenerate();
- 
-            return redirect()->route('dashboard');
-        }
- 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -33,10 +16,9 @@ class LoginAdminController extends Controller
      */
     public function index()
     {
-        if ((Auth::guard('admin')->check())){
-            return redirect()->route('dashboard');
-        }
-        return view('adm.login');
+        $customer = Customers::find(Auth::guard('web')->user()->id);
+        $ads = Ads::where('id_user', $customer->id)->get();
+        return view('ui.profile', ['customer' => $customer, 'ads' => $ads]);
     }
 
     /**
@@ -103,15 +85,5 @@ class LoginAdminController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function logout(Request $request){
-        Auth::logout();
- 
-        $request->session()->invalidate();
-    
-        $request->session()->regenerateToken();
-    
-        return redirect()->route('admin.login');
     }
 }

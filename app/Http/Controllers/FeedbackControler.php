@@ -2,30 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Feedback;
+use App\Models\Feedbacks;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
-class LoginAdminController extends Controller
+class FeedbackControler extends Controller
 {
-
-    public function authenticate(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
-        if (Auth::guard('admin')->attempt($credentials)) {
-            $request->session()->regenerate();
- 
-            return redirect()->route('dashboard');
-        }
- 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -33,10 +16,13 @@ class LoginAdminController extends Controller
      */
     public function index()
     {
-        if ((Auth::guard('admin')->check())){
-            return redirect()->route('dashboard');
-        }
-        return view('adm.login');
+        $feedbacks = DB::table('feedbacks')->get();
+        return view('adm.feedback.index', ['feedbacks' => $feedbacks]);
+    }
+
+    public function contact()
+    {
+        return view('ui.contact');
     }
 
     /**
@@ -57,7 +43,20 @@ class LoginAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'desc' => 'required',
+        ]);
+
+        $data = new Feedbacks([
+            'name' => $request->name,
+            'email' => $request->email,
+            'desc' => $request->desc,
+        ]);
+        $data->save();
+
+        return redirect()->route('contact')->with('success', 'Umpan balik berhasil dikirim!');
     }
 
     /**
@@ -103,15 +102,5 @@ class LoginAdminController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function logout(Request $request){
-        Auth::logout();
- 
-        $request->session()->invalidate();
-    
-        $request->session()->regenerateToken();
-    
-        return redirect()->route('admin.login');
     }
 }

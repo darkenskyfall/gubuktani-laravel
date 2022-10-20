@@ -6,9 +6,9 @@
 <div class="container mb-5">
     <h1 style="margin-top:100px;">Pasang Iklan</h1>
     @if($errors->any())
-        @foreach($errors->all() as $err)
-        <p class="alert alert-danger mt-3">{{ $err }}</p>
-        @endforeach
+    @foreach($errors->all() as $err)
+    <p class="alert alert-danger mt-3">{{ $err }}</p>
+    @endforeach
     @endif
     <form class="mt-3" action="{{ route('ads.create') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -17,9 +17,9 @@
             <label for="exampleInputEmail1" class="form-label">Kategori</label>
             <select class="form-select" name="id_category" aria-label="Default select example" required>
                 <option>Pilih Kategori</option>
-                <option value="1">Sawah</option>
-                <option value="2">Kebun</option>
-                <option value="3">Hutan</option>
+                @foreach($cats as $cat)
+                <option value="{{ $cat->id }}">{{ $cat->cateogory }}</option>
+                @endforeach
             </select>
         </div>
         <div class="mb-3">

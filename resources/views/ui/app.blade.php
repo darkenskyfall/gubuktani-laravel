@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gubuktani - @yield('title')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link href="{{ URL::asset('css/styles.css') }}" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <style>
     .bd-placeholder-img {
@@ -87,9 +90,15 @@
         object-fit: cover;
     }
 
-    .img-thumbnail {
+    .fit-image {
         width: 80px;
         height: 80px;
+        object-fit: cover;
+    }
+
+    .fit-image-profile {
+        width: 200px;
+        height: 200px;
         object-fit: cover;
     }
     
@@ -113,7 +122,7 @@
                     </li>
                     <li class=" nav-item">
                             @if(Auth::guard('web')->check())
-                            <a class="nav-link text-white" href="#">Halo {{ Auth::guard('web')->user()->fname  }}</a>
+                            <a class="nav-link text-white" href="{{ route('profile') }}">Halo {{ Auth::guard('web')->user()->fname  }}</a>
                             @else
                             <a class="nav-link text-white" href="{{ url('/login') }}">Login</a>
                             @endif
@@ -123,7 +132,7 @@
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-primary me-2" type="submit">Search</button>
                     @if(Auth::guard('web')->check())
-                    <a class="btn btn-danger" type="submit">Logout</a>
+                    <a class="btn btn-danger" href="{{ route('login.logout') }}">Logout</a>
                     @endif
                 </form>
             </div>
@@ -155,9 +164,9 @@
         </a>
 
         <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-white">Kebijakan Privasi</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-white">Bantuan</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-white">Kontak</a></li>
+            <li class="nav-item"><a href="{{ route('policy') }}" class="nav-link px-2 text-white">Kebijakan Privasi</a></li>
+            <li class="nav-item"><a href="{{ route('help') }}" class="nav-link px-2 text-white">Bantuan</a></li>
+            <li class="nav-item"><a href="{{ route('contact') }}" class="nav-link px-2 text-white">Kontak</a></li>
         </ul>
     </footer>
 
@@ -165,6 +174,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+    <script src="{{ URL::asset('js/scripts.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="{{ URL::asset('assets/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ URL::asset('assets/demo/chart-bar-demo.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="{{ URL::asset('js/datatables-simple-demo.js') }}"></script>
 </body>
 
 </html>

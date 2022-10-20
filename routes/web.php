@@ -6,8 +6,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeedbackControler;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginAdminController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,21 +28,34 @@ Route::get('/',[HomeController::class, 'index'])->name('home');
 
 Route::get('/login',[AuthController::class, 'login'])->name('login');
 Route::post('/login',[AuthController::class, 'authenticate'])->name('login.authenticate');
-Route::post('/logout',[AuthController::class, 'logout'])->name('login.logout');
+
 
 Route::get('/register',[AuthController::class, 'register'])->name('register');
 Route::post('/register',[AuthController::class, 'createRegister'])->name('register.create');
+
+Route::get('/kebijakan-privasi', function () {
+    return view('ui.policy');
+})->name('policy');
+
+Route::get('/bantuan', function () {
+    return view('ui.help');
+})->name('help');
+
+Route::get('/kontak',[FeedbackControler::class, 'contact'])->name('contact');
+Route::post('/kontak',[FeedbackControler::class, 'store'])->name('contact.store');
 
 Route::prefix('ads')->group(function () {
     Route::get('/list',[AdsController::class, 'index'])->name('ads');    
     Route::get('/create',[AdsController::class, 'create'])->name('ads.create');
     Route::post('/create',[AdsController::class, 'store'])->name('ads.store');
     Route::get('/detail/{id}',[AdsController::class, 'show'])->name('ads.show'); 
+    Route::get('/edit/{id}',[AdsController::class, 'edit'])->name('ads.edit'); 
+    Route::post('/hapus/{id}',[AdsController::class, 'destroy'])->name('ads.delete');
 });
 
 Route::middleware(['web'])->group(function () {
-    Route::get('/admin',[DashboardController::class, 'index'])->name('dashboard'); 
-    Route::get('/admin/logout',[LoginAdminController::class, 'logout'])->name('logout'); 
+    Route::get('/profil',[ProfileController::class, 'index'])->name('profile');
+    Route::get('/logout',[AuthController::class, 'logout'])->name('login.logout');
 });
 
 Route::get('/admin/login',[LoginAdminController::class, 'index'])->name('admin.login'); 
@@ -66,5 +81,9 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/pemilik',[CustomerController::class, 'index'])->name('customer');
     Route::get('/admin/pemilik/{id}',[CustomerController::class, 'show'])->name('customer.show'); 
     Route::post('/admin/pemilik/hapus/{id}',[CustomerController::class, 'destroy'])->name('customer.delete');
+
+    Route::get('/admin/umpan-balik',[FeedbackControler::class, 'index'])->name('feedback');
+    // Route::get('/admin/pemilik/{id}',[CustomerController::class, 'show'])->name('customer.show'); 
+    // Route::post('/admin/pemilik/hapus/{id}',[CustomerController::class, 'destroy'])->name('customer.delete');
 
 });

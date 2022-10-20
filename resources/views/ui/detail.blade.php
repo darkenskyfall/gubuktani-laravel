@@ -97,7 +97,7 @@
             <div class="row">
                 <div class="span4">
                     <div class="clearfix content-heading">
-                    <img style="float:left" src="{{ asset('profiles/' . $user->profile_picture) }}" alt="{{ $user->fname }}" class="img-thumbnail rounded-circle me-2">
+                    <img style="float:left" src="{{ asset('profiles/' . $user->profile_picture) }}" alt="{{ $user->fname }}" class="img-thumbnail fit-image rounded-circle me-2">
                     <h3><b>{{ $user->fname . " " . $user->lname}}</b></h3>
                     <p style="font-size: 20px;"><b>{{ $user->address }}</b> • {{ $user->phone }}</p>
                     </div>

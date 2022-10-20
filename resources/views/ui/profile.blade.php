@@ -9,13 +9,21 @@ use Carbon\Carbon;
 @section('content')
 <div class="container mb-5">
     <h1 style="margin-top:100px;">Profil</h1>
-    <div class="card mb-4 mt-5">
+    @if(session('success'))
+    <p class="alert alert-success mt-3">{{ session('success') }}</p>
+    @endif
+    @if($errors->any())
+    @foreach($errors->all() as $err)
+    <p class="alert alert-danger mt-3">{{ $err }}</p>
+    @endforeach
+    @endif
+    <div class="card mb-4 mt-3">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
             DataTable Example
         </div>
         <div class="card-body">
-            <h3 class="mt-3"><b>Data Pemilik</b></h3>
+            <h3 class="mt-3"><b>Profil Pemilik</b></h3>
             <div class="row mt-3">
                 <div class="col-md-3">
                     <b>Nama Lengkap</b>
@@ -53,20 +61,11 @@ use Carbon\Carbon;
                 </div>
             </div>
             <div class=" mt-3">
-                    <button class="btn btn-sm btn-primary">Edit Profil</button>
-                    <button class="btn btn-sm btn-primary">Ganti Foto Profil</button>
-                    <button class="btn btn-sm btn-primary">Ganti Password</button>
+                    <a href="{{ route('profile.edit', $customer->id) }}" class="btn btn-sm btn-primary">Edit Profil</a>
+                    <a href="{{ route('profile.change.password', $customer->id) }}" class="btn btn-sm btn-primary">Ganti Password</a>
                 </div>
                 <hr>
-                <h3 class=" mt-3"><b>Data Iklan</b></h3>
-                @if(session('success'))
-                <p class="alert alert-success mt-3">{{ session('success') }}</p>
-                @endif
-                @if($errors->any())
-                @foreach($errors->all() as $err)
-                <p class="alert alert-danger mt-3">{{ $err }}</p>
-                @endforeach
-                @endif
+                <h3 class=" mt-3"><b>Iklan</b></h3>
                 <table id="datatablesSimple" class="mt-3">
                     <thead>
                         <tr>

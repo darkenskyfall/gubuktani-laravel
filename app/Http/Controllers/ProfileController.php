@@ -6,6 +6,7 @@ use App\Models\Ads;
 use App\Models\Customers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -61,7 +62,36 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        //
+        $customer = Customers::find($id);
+        return view('ui.profileEdit', ['customer' => $customer]);
+    }
+
+    public function changePassword($id)
+    {
+        $customer = Customers::find($id);
+        return view('ui.changePassword', ['customer' => $customer]);
+    }
+
+    public function updatePassword(Request $request, $id){
+        # Validation
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+
+        #Match The Old Password
+        if(!Hash::check($request->old_password, auth()->user()->password)){
+            return back()->with("error", "Old Password Doesn't match!");
+        }
+
+
+        #Update the new Password
+        Customers::whereId(auth()->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return back()->with("success", "Password berhasil diperbarui!");
     }
 
     /**
@@ -73,7 +103,38 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'fname' => 'required',
+            'lname' => 'required',
+            'email' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'work' => 'required',
+        ]);
+        
+
+        $user = Customers::find($id);
+
+        $user->fname = $request->fname;
+        $user->lname = $request->lname;
+        if ($user->email != $request->email){
+            $user->email = $request->email;
+        }
+        $user->address = $request->address;
+        $user->phone = $request->phone;
+        $user->work = $request->work;
+
+        if ($image = $request->file('profile_picture')) {
+            $imageName = time().'.'.$request->profile_picture->extension();  
+            $request->profile_picture->move(public_path('profiles'), $imageName);
+            $user->profile_picture = "$imageName";
+        }else{
+            ///
+        }
+
+        $user->save();
+
+        return redirect()->route('profile')->with('success', 'Profil berhasil diganti');
     }
 
     /**

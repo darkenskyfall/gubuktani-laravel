@@ -129,7 +129,9 @@ class AdsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ad = Ads::find($id);
+        $cats = DB::table('categories')->get();
+        return view('ui.adsEdit', ['ad' => $ad, 'cats' => $cats]);
     }
 
     /**
@@ -141,7 +143,70 @@ class AdsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'id_category' => 'required',
+            'title' => 'required',
+            'address' => 'required',
+            'large' => 'required',
+            'certification' => 'required',
+            'desc' => 'required',
+            'price' => 'required',
+            'period' => 'required',
+            'irigation' => 'required',
+            'land' => 'required',
+            'road' => 'required',
+            'view' => 'required',
+            'range' => 'required',
+            'temperature' => 'required',
+            'height' => 'required',
+            'notice' => 'required',
+        ]);
+
+        $data = Ads::find($id);
+        $data->id_category = $request->id_category;
+        $data->title = $request->title;
+        $data->address = $request->address;
+        $data->large = $request->large;
+        $data->certification = $request->certification;
+        $data->desc = $request->desc;
+        $data->price = $request->price;
+        $data->period = $request->period;
+        $data->irigation = $request->irigation;
+        $data->land = $request->land;
+        $data->road = $request->road;
+        $data->view = $request->view;
+        $data->range = $request->range;
+        $data->temperature = $request->temperature;
+        $data->height = $request->height;
+        $data->notice = $request->notice;
+
+        if ($image = $request->file('picture_one')) {
+            $imageName = time().'.'.$request->picture_one->extension();  
+            $request->picture_one->move(public_path('profiles'), $imageName);
+            $data->picture_one = "$imageName";
+        }
+
+        if ($image = $request->file('picture_two')) {
+            $imageName = time().'.'.$request->picture_two->extension();  
+            $request->picture_two->move(public_path('profiles'), $imageName);
+            $data->picture_two = "$imageName";
+        }
+
+        if ($image = $request->file('picture_three')) {
+            $imageName = time().'.'.$request->picture_three->extension();  
+            $request->picture_three->move(public_path('profiles'), $imageName);
+            $data->picture_three = "$imageName";
+        }
+
+        if ($image = $request->file('picture_four')) {
+            $imageName = time().'.'.$request->picture_four->extension();  
+            $request->picture_four->move(public_path('profiles'), $imageName);
+            $data->picture_four = "$imageName";
+        }
+
+        $data->save();
+
+        return redirect()->route('profile')->with('success', 'Iklan anda berhasil diperbarui!');
     }
 
     /**

@@ -49,12 +49,21 @@ Route::prefix('ads')->group(function () {
     Route::get('/create',[AdsController::class, 'create'])->name('ads.create');
     Route::post('/create',[AdsController::class, 'store'])->name('ads.store');
     Route::get('/detail/{id}',[AdsController::class, 'show'])->name('ads.show'); 
-    Route::get('/edit/{id}',[AdsController::class, 'edit'])->name('ads.edit'); 
-    Route::post('/hapus/{id}',[AdsController::class, 'destroy'])->name('ads.delete');
 });
 
 Route::middleware(['web'])->group(function () {
+    Route::prefix('ads')->group(function () {
+        Route::get('/create',[AdsController::class, 'create'])->name('ads.create');
+        Route::post('/create',[AdsController::class, 'store'])->name('ads.store');
+        Route::get('/edit/{id}',[AdsController::class, 'edit'])->name('ads.edit');
+        Route::post('/update/{id}',[AdsController::class, 'update'])->name('ads.update');
+    });
     Route::get('/profil',[ProfileController::class, 'index'])->name('profile');
+    Route::get('/profil-edit/{id}',[ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profil-edit/{id}',[ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/ganti-password/{id}',[ProfileController::class, 'changePassword'])->name('profile.change.password');
+    Route::post('/ganti-password/{id}',[ProfileController::class, 'updatePassword'])->name('profile.change.password.update');
+    Route::post('/hapus/{id}',[AdsController::class, 'destroy'])->name('ads.delete');
     Route::get('/logout',[AuthController::class, 'logout'])->name('login.logout');
 });
 

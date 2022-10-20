@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdsAdminController;
 use App\Http\Controllers\AdsController;
 use App\Http\Controllers\AuthController;
@@ -74,6 +75,13 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin',[DashboardController::class, 'index'])->name('dashboard'); 
     Route::get('/admin/logout',[LoginAdminController::class, 'logout'])->name('logout'); 
 
+    Route::get('/admin/admin',[AdminController::class, 'index'])->name('admin.list');
+    Route::get('/admin/admin/tambah',[AdminController::class, 'create'])->name('admin.create');
+    Route::post('/admin/admin/tambah',[AdminController::class, 'store'])->name('admin.store');
+    Route::get('/admin/admin/edit/{id}',[AdminController::class, 'edit'])->name('admin.edit');
+    Route::post('/admin/admin/edit/{id}',[AdminController::class, 'update'])->name('admin.update');
+    Route::post('/admin/admin/hapus/{id}',[AdminController::class, 'destroy'])->name('admin.delete');
+
     Route::get('/admin/kategori',[CategoryController::class, 'index'])->name('category');
     Route::get('/admin/kategori/tambah',[CategoryController::class, 'create'])->name('category.create'); 
     Route::post('/admin/kategori/tambah',[CategoryController::class, 'store'])->name('category.store'); 
@@ -92,7 +100,5 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/pemilik/hapus/{id}',[CustomerController::class, 'destroy'])->name('customer.delete');
 
     Route::get('/admin/umpan-balik',[FeedbackControler::class, 'index'])->name('feedback');
-    // Route::get('/admin/pemilik/{id}',[CustomerController::class, 'show'])->name('customer.show'); 
-    // Route::post('/admin/pemilik/hapus/{id}',[CustomerController::class, 'destroy'])->name('customer.delete');
 
 });

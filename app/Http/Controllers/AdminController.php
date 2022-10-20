@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\Admin;
+use App\Models\Admins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -15,7 +18,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $admins = Admins::get();
+        return view('adm.admin.index', ['admins' => $admins]);
     }
 
     /**
@@ -25,7 +29,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view('adm.admin.create');
     }
 
     /**
@@ -36,7 +40,23 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:customers',
+            'password' => 'required',
+            'password_confirm' => 'required|same:password',
+        ]);
+
+        
+        $user = new Admins([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $user->save();
+
+        return redirect()->route('admin.list')->with('success', 'Admin berhasil dibuat!');
     }
 
     /**
@@ -58,7 +78,11 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        if ($id == 1){
+            return redirect()->route('admin.list');    
+        }
+        $admin = Admins::find($id);
+        return view('adm.admin.edit', ['admin' => $admin]);
     }
 
     /**
@@ -70,7 +94,33 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:customers',
+        ]);
+        
+        
+        $data = Admins::find($id);
+        $data->name = $request->name;
+        $data->email = $request->email;
+
+        $user = new Admins([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        if ($request->password && $request->password_confirm){
+            $request->validate([
+                'password' => 'required',
+                'password_confirm' => 'required|same:password',
+            ]); 
+            $data->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('admin.list')->with('success', 'Admin berhasil diperbarui!');
     }
 
     /**
@@ -81,6 +131,11 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if ($id == 1){
+            return redirect()->route('admin.list');    
+        }
+        $data = Admins::find($id);
+        $data->delete();
+        return redirect()->route('admin.list')->with('success', 'Admin berhasil dihapus!');
     }
 }

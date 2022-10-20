@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -13,7 +14,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('adm.dashboard');
+        $unverif = DB::table('ads')->where('status', 0)->count();
+        $cust = DB::table('customers')->count();
+        $feed = DB::table('feedbacks')->count();
+        return view('adm.dashboard', ['unverif' => $unverif, 'cust' => $cust, 'feed' => $feed]);
     }
 
     /**

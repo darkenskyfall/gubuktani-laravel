@@ -55,7 +55,7 @@
                             Dashboard
                         </a>
                         <div class="sb-sidenav-menu-heading">Addons</div>
-                        <a class="nav-link" href="charts.html">
+                        <a class="nav-link" href="{{ route('admin.list') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                             Admin
                         </a>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
-                    Start Bootstrap
+                    {{Auth::guard('admin')->user()->name}}
                 </div>
             </nav>
         </div>
@@ -90,7 +90,7 @@
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2022</div>
+                        <div class="text-muted">Copyright &copy; Gubuktani {{ date('Y')}}</div>
                         <div>
                             <a href="#">Privacy Policy</a>
                             &middot;

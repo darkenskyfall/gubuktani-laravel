@@ -1,6 +1,6 @@
 @extends('adm.app')
 
-@section('title', 'Admin')
+@section('title', 'Dashboard')
 
 @section('content')
 <div class="container-fluid px-4">

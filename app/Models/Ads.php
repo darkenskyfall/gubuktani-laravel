@@ -33,5 +33,17 @@ class Ads extends Model
         'picture_two',
         'picture_three',
         'picture_four',
+        'created_at',
+        'updated_at',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(Customers::class, 'id_user');
+    }
+
+    public function categories()
+    {
+        return $this->belongsTo(Categories::class, 'id_category');
+    }
 }

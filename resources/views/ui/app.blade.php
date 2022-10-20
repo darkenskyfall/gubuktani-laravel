@@ -61,7 +61,7 @@
 
     .carousel-inner>.carousel-item {
         height: 500px;
-        
+
     }
 
     .carousel-inner>.carousel-item>img {
@@ -87,11 +87,12 @@
         object-fit: cover;
     }
 
-    .img-thumbnail{
+    .img-thumbnail {
         width: 80px;
         height: 80px;
         object-fit: cover;
     }
+    
 </style>
 
 <body>
@@ -111,18 +112,18 @@
                         <a class="nav-link text-white" href="{{ url('/ads/create') }}"">Pasang Iklan</a>
                     </li>
                     <li class=" nav-item">
-                        @if(Auth::guard('web')->check())
-                        <a class="nav-link text-white" href="#">Halo {{ Auth::guard('web')->user()->fname  }}</a>
-                        @else
-                        <a class="nav-link text-white" href="{{ url('/login') }}">Login</a>
-                        @endif
+                            @if(Auth::guard('web')->check())
+                            <a class="nav-link text-white" href="#">Halo {{ Auth::guard('web')->user()->fname  }}</a>
+                            @else
+                            <a class="nav-link text-white" href="{{ url('/login') }}">Login</a>
+                            @endif
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-primary me-2" type="submit">Search</button>
                     @if(Auth::guard('web')->check())
-                        <a class="btn btn-danger" type="submit">Logout</a>
+                    <a class="btn btn-danger" type="submit">Logout</a>
                     @endif
                 </form>
             </div>

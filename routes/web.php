@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedbackControler;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginAdminController;
 use App\Http\Controllers\ProfileController;
@@ -34,6 +35,11 @@ Route::post('/login',[AuthController::class, 'authenticate'])->name('login.authe
 Route::get('/register',[AuthController::class, 'register'])->name('register');
 Route::post('/register',[AuthController::class, 'createRegister'])->name('register.create');
 
+Route::get('lupa-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('lupa-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
 Route::get('/kebijakan-privasi', function () {
     return view('ui.policy');
 })->name('policy');
@@ -46,6 +52,7 @@ Route::get('/kontak',[FeedbackControler::class, 'contact'])->name('contact');
 Route::post('/kontak',[FeedbackControler::class, 'store'])->name('contact.store');
 
 Route::prefix('ads')->group(function () {
+    Route::get('/cari',[AdsController::class, 'search'])->name('ads.search');    
     Route::get('/list',[AdsController::class, 'index'])->name('ads');    
     Route::get('/create',[AdsController::class, 'create'])->name('ads.create');
     Route::post('/create',[AdsController::class, 'store'])->name('ads.store');
@@ -58,6 +65,7 @@ Route::middleware(['web'])->group(function () {
         Route::post('/create',[AdsController::class, 'store'])->name('ads.store');
         Route::get('/edit/{id}',[AdsController::class, 'edit'])->name('ads.edit');
         Route::post('/update/{id}',[AdsController::class, 'update'])->name('ads.update');
+        Route::post('/wishlist/{id}',[AdsController::class, 'updateWishlist'])->name('ads.update.wishlist');
     });
     Route::get('/profil',[ProfileController::class, 'index'])->name('profile');
     Route::get('/profil-edit/{id}',[ProfileController::class, 'edit'])->name('profile.edit');

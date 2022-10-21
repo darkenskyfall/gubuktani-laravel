@@ -111,6 +111,48 @@ use Carbon\Carbon;
                         @endforeach
                     </tbody>
                 </table>
+                <hr>
+                <h3 class=" mt-3"><b>Wishlist Saya</b></h3>
+                <table class="table mt-3">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Judul</th>
+                            <th>Alamat</th>
+                            <th>Kateogori</th>
+                            <th>Kondisi</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>No</th>
+                            <th>Judul</th>
+                            <th>Alamat</th>
+                            <th>Kateogori</th>
+                            <th>Kondisi</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @php $no = 1 @endphp
+                        @foreach($wishlists as $wishlist)
+                        <tr>
+                            <td style="width:5%;">{{ $no++ }}</td>
+                            <td>{{ $wishlist->first()->title }}</td>
+                            <td>{{ $wishlist->first()->address }}</td>
+                            <td>{{ $wishlist->first()->categories->cateogory }}</td>
+                            <td><button class="btn btn-sm {{ ($wishlist->first()->status == 1) ? 'btn-danger' : 'btn-primary' }} disabled">{{ ($wishlist->first()->status == 1) ? "Tersewa" : "Tersedia" }}</button></td>
+                            <td style="width:15%;">
+                                <form action="{{ route('ads.delete', $wishlist->first()->id) }}" method="post">
+                                    @csrf
+                                    <a class="btn btn-sm btn-warning" href="{{ route('ads.show', $wishlist->first()->id) }}"><i class="fas fa-eye"></i></a>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

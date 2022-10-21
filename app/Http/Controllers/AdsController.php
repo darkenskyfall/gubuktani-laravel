@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ads;
+use App\Models\Wishlists;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +17,21 @@ class AdsController extends Controller
      */
     public function index()
     {
-        $ads = DB::table('ads')->get();
-        return view('ui.list', ['ads' => $ads]);
+        $ads = Ads::get();
+        $search = "";
+        return view('ui.list', ['ads' => $ads, 'search' => $search]);
+    }
+
+    public function search(Request $request)
+    {
+        // menangkap data pencarian
+		$search = $request->search;
+ 
+        // mengambil data dari table pegawai sesuai pencarian data
+        $ads = Ads::where('title', 'like' ,"%".$search."%")->get();
+
+            // mengirim data pegawai ke view index
+        return view('ui.list',['ads' => $ads, 'search' => $search]);
     }
 
     /**
@@ -116,9 +130,32 @@ class AdsController extends Controller
      */
     public function show($id)
     {
+        $ad = Ads::find($id);
+        $user = DB::table('customers')->find($ad->id_user);
+        $wishlist = DB::table('wishlists')->where(['id_lahan' => $ad->id, 'id_user' => $user->id])->first();
+        return view('ui.detail', ['ad' => $ad, 'user' => $user, 'wishlist' => $wishlist]);
+    }
+
+    public function updateWishlist(Request $request, $id)
+    {
+
         $ad = DB::table('ads')->find($id);
         $user = DB::table('customers')->find($ad->id_user);
-        return view('ui.detail', ['ad' => $ad, 'user' => $user]);
+        $wishlist = DB::table('wishlists')->where(['id_lahan' => $ad->id, 'id_user' => $user->id])->first();
+
+        if ($wishlist == null){
+            $user = new Wishlists([
+                'id_user' => Auth::guard('web')->user()->id,
+                'id_lahan' => $id,
+            ]);
+            $user->save();
+            return redirect()->route('ads.show', $id)->with('success', 'Wishlist ditambahkan!');
+        }else{
+            $data = Wishlists::find($wishlist->id);
+            $data->delete();
+            return redirect()->route('ads.show', $id)->with('success', 'Wishlist dihapus!');
+        }
+        
     }
 
     /**

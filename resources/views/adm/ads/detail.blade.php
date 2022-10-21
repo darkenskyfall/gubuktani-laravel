@@ -175,7 +175,6 @@ use Carbon\Carbon;
                 @csrf
                 <input type="hidden" name="status" value="{{ ($ad->status == 0) ? '1' : '0' }}"">
                 <button class="btn {{ ($ad->status == 0) ? 'btn-primary' : 'btn-danger' }}">{{ ($ad->status == 0) ? 'Verifikasi' : 'Batalkan Verifikasi' }}</button>
-                <button class="btn btn-warning">Cetak PDF</button>
             </form> 
         </div>
     </div>

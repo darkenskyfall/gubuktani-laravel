@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ads;
 use App\Models\Customers;
+use App\Models\Wishlists;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +20,15 @@ class ProfileController extends Controller
     {
         $customer = Customers::find(Auth::guard('web')->user()->id);
         $ads = Ads::where('id_user', $customer->id)->get();
-        return view('ui.profile', ['customer' => $customer, 'ads' => $ads]);
+        $wishlists = Wishlists::where('id_user', $customer->id)->get();
+
+        $wAds = [];
+        foreach ($wishlists as $key => $value) {
+            $newAds = $ads->where('id', $value->id_lahan);
+            array_push($wAds, $newAds);
+        }
+
+        return view('ui.profile', ['customer' => $customer, 'ads' => $ads, 'wishlists' => $wAds]);
     }
 
     /**
@@ -128,8 +137,6 @@ class ProfileController extends Controller
             $imageName = time().'.'.$request->profile_picture->extension();  
             $request->profile_picture->move(public_path('profiles'), $imageName);
             $user->profile_picture = "$imageName";
-        }else{
-            ///
         }
 
         $user->save();

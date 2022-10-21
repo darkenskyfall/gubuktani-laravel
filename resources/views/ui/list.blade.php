@@ -5,6 +5,9 @@
 @section('content')
 <div class="container">
     <h1 class="mt-5">Cari Lahan</h1>
+    @if($search != "")
+    <h4>Hasil Pencarian dari "{{ $search }}"</h4>
+    @endif
     @if(session('success'))
     <p class="alert alert-success mt-3">{{ session('success') }}</p>
     @endif
@@ -15,7 +18,7 @@
                 <div class="card-body">
                     <h4><b>{{ $ad->title }}</b></h4>
                     <ul class="mt-3">
-                        <li>Perkebunan</li>
+                    <li><b>{{ $ad->categories->cateogory }}</b></li>
                         <li>Luas {{ $ad->large }}</li>
                         <li>Rp. {{ $ad->price }} / {{ $ad->period }}</li>
                     </ul>

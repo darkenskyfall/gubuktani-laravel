@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ads;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +15,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $ads = DB::table('ads')->get();
+        $ads = Ads::get();
         return view('ui.home', ['ads' => $ads]);
     }
 

@@ -55,6 +55,7 @@
     <div class="mt-5">
 
         <button class="btn {{ ($ad->condition == 0) ? 'btn-primary' : 'btn-danger' }} }} mb-3">{{ ($ad->condition == 0) ? "Tersedia" : "Tersewa" }}</button>
+        <button class="btn btn-dark }} mb-3">{{ $ad->categories->cateogory }}</button>
 
         <h1><b>{{ $ad->title }}</b></h1>
         <p>{{ $ad->desc }}</p>
@@ -97,20 +98,25 @@
             <div class="row">
                 <div class="span4">
                     <div class="clearfix content-heading">
-                    <img style="float:left" src="{{ asset('profiles/' . $user->profile_picture) }}" alt="{{ $user->fname }}" class="img-thumbnail fit-image rounded-circle me-2">
-                    <h3><b>{{ $user->fname . " " . $user->lname}}</b></h3>
-                    <p style="font-size: 20px;"><b>{{ $user->address }}</b> • {{ $user->phone }}</p>
+                        <img style="float:left" src="{{ asset('profiles/' . $user->profile_picture) }}" alt="{{ $user->fname }}" class="img-thumbnail fit-image rounded-circle me-2">
+                        <h3><b>{{ $user->fname . " " . $user->lname}}</b></h3>
+                        <p style="font-size: 20px;"><b>{{ $user->address }}</b> • {{ $user->phone }}</p>
                     </div>
                 </div>
             </div>
         </div>
 
+        @if(Auth::guard('web')->check())
+        @if(session('success'))
+        <p class="alert alert-success mt-3">{{ session('success') }}</p>
+        @endif
         <div class="mt-5">
-            <button class="btn btn-danger mb-3">Wishlist</button>
-            <button class="btn btn-primary mb-3">Booking</button>
-            <button class="btn btn-light mb-3">Sewa</button>
+            <form action="{{ route('ads.update.wishlist', $ad->id) }}" method="post">
+                @csrf
+                <button class="btn {{ ($wishlist == null) ? 'btn-light' : 'btn-danger' }} mb-3">{{ ($wishlist == null) ? 'Tambahkan Wishlist' : 'Hapus dari Wishlist' }}</button>
+            </form>
         </div>
-
+        @endif
 
     </div>
 </div>

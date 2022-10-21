@@ -16,22 +16,22 @@
                 <div class="carousel-item active" data-bs-interval="10000">
                     <img src="{{ URL::asset('assets/img/sawah-satu.jpeg') }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block text-white">
-                        <h5>First slide label</h5>
-                        <p>Some representative placeholder content for the first slide.</p>
+                        <h5>Aman Dan Terpercaya</h5>
+                        <p>Gubuktani.co.id menghargai dan menjamin privasi data pribadi anda dalam memilih lahan serta memberikan rekomendasi yang terpercaya untuk anda.</p>
                     </div>
                 </div>
                 <div class="carousel-item" data-bs-interval="2000">
                     <img src="{{ URL::asset('assets/img/sawah-dua.jpeg') }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block text-white">
-                        <h5>First slide label</h5>
-                        <p>Some representative placeholder content for the first slide.</p>
+                        <h5>Mudah Dan Cepat</h5>
+                        <p>Memberikan kemudahan pada anda dalam memilih lahan sewa dengan kriteria yang anda inginkan dan juga cepat dalam mengolah data yang ingin anda tampilkan.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="{{ URL::asset('assets/img/sawah-tiga.jpeg') }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block text-white">
-                        <h5>First slide label</h5>
-                        <p>Some representative placeholder content for the first slide.</p>
+                        <h5>Bersahabat</h5>
+                        <p>Posting di Gubuktani.co.id 100% Gratis dan memberikan layanan prima bagi anda dalam mengiklankan lahan anda agar dikenal secara luas oleh masyarakat.</p>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                 <div class="card-body">
                     <h4><b>{{ $ad->title }}</b></h4>
                     <ul class="mt-3">
-                        <li>Perkebunan</li>
+                        <li><b>{{ $ad->categories->cateogory }}</b></li>
                         <li>Luas {{ $ad->large }}</li>
                         <li>Rp. {{ $ad->price }} / {{ $ad->period }}</li>
                     </ul>

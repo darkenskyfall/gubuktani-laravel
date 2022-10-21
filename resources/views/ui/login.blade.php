@@ -24,6 +24,7 @@
             <input type="password" name="password" class="form-control" required>
         </div>
         <p>Belum Punya Akun? <a href="{{ url('/register') }}">Daftar Sekarang!</a></p>
+        <p>Lupa Password? <a href="{{ route('forget.password.get') }}">Klik disini!</a></p>
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
 </div>

@@ -80,7 +80,7 @@
             <div class="col-md-6">
                 <h5>Tambahan</h5>
                 <ul class="list-group mt-3 mb-3">
-                    <li class="list-group-item"><b>Jarak Lahan</b> {{ $ad->irigation }}</li>
+                    <li class="list-group-item"><b>Jarak Sumber Air</b> {{ $ad->irigation }}</li>
                     <li class="list-group-item"><b>Suhu</b> {{ $ad->land }}</li>
                     <li class="list-group-item"><b>Ketinggian</b> {{ $ad->height }}</li>
                 </ul>

@@ -19,7 +19,8 @@ class ProfileController extends Controller
     public function index()
     {
         $customer = Customers::find(Auth::guard('web')->user()->id);
-        $ads = Ads::where('id_user', $customer->id)->get();
+        $ownAds = Ads::where('id_user', $customer->id)->get();
+        $ads = Ads::where('status', 1)->get();
         $wishlists = Wishlists::where('id_user', $customer->id)->get();
 
         $wAds = [];
@@ -28,7 +29,7 @@ class ProfileController extends Controller
             array_push($wAds, $newAds);
         }
 
-        return view('ui.profile', ['customer' => $customer, 'ads' => $ads, 'wishlists' => $wAds]);
+        return view('ui.profile', ['customer' => $customer, 'ads' => $ownAds, 'wishlists' => $wAds]);
     }
 
     /**

@@ -17,7 +17,7 @@ class AdsController extends Controller
      */
     public function index()
     {
-        $ads = Ads::get();
+        $ads = Ads::where('status', '=', 1)->get();
         $search = "";
         return view('ui.list', ['ads' => $ads, 'search' => $search]);
     }
@@ -65,14 +65,14 @@ class AdsController extends Controller
             'desc' => 'required',
             'price' => 'required',
             'period' => 'required',
-            'irigation' => 'required',
-            'land' => 'required',
-            'road' => 'required',
-            'view' => 'required',
-            'range' => 'required',
-            'temperature' => 'required',
-            'height' => 'required',
-            'notice' => 'required',
+            // 'irigation' => 'required',
+            // 'land' => 'required',
+            // 'road' => 'required',
+            // 'view' => 'required',
+            // 'range' => 'required',
+            // 'temperature' => 'required',
+            // 'height' => 'required',
+            // 'notice' => 'required',
             'picture_one' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'picture_two' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'picture_three' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -119,7 +119,7 @@ class AdsController extends Controller
 
         $user->save();
 
-        return redirect()->route('ads')->with('success', 'Iklan anda berhasil dibuat!');
+        return redirect()->route('ads')->with('success', 'Iklan anda berhasil dibuat!, sedang menunggu verifikasi dari admin');
     }
 
     /**
@@ -132,7 +132,7 @@ class AdsController extends Controller
     {
         $ad = Ads::find($id);
         $user = DB::table('customers')->find($ad->id_user);
-        $wishlist = DB::table('wishlists')->where(['id_lahan' => $ad->id, 'id_user' => $user->id])->first();
+        $wishlist = DB::table('wishlists')->where(['id_lahan' => $ad->id, 'id_user' => Auth::guard('web')->user()->id])->first();
         return view('ui.detail', ['ad' => $ad, 'user' => $user, 'wishlist' => $wishlist]);
     }
 
@@ -141,7 +141,7 @@ class AdsController extends Controller
 
         $ad = DB::table('ads')->find($id);
         $user = DB::table('customers')->find($ad->id_user);
-        $wishlist = DB::table('wishlists')->where(['id_lahan' => $ad->id, 'id_user' => $user->id])->first();
+        $wishlist = DB::table('wishlists')->where(['id_lahan' => $ad->id, 'id_user' => Auth::guard('web')->user()->id])->first();
 
         if ($wishlist == null){
             $user = new Wishlists([
@@ -167,6 +167,9 @@ class AdsController extends Controller
     public function edit($id)
     {
         $ad = Ads::find($id);
+        if ($ad->status == 0){
+            return redirect()->back();
+        }
         $cats = DB::table('categories')->get();
         return view('ui.adsEdit', ['ad' => $ad, 'cats' => $cats]);
     }

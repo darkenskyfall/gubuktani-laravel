@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ads;
+use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,8 +16,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $ads = Ads::get();
-        return view('ui.home', ['ads' => $ads]);
+        $ads = Ads::where('status', '=', 1)->get();
+        $cats = Categories::get();
+        return view('ui.home', ['ads' => $ads, 'cats' => $cats]);
     }
 
     /**

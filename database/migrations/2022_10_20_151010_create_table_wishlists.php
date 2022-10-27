@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('wishlists', function (Blueprint $table) {
-            $table->id();
-            $table->integer('id_user');
-            $table->integer('id_lahan');
-            $table->timestamps();
+        Schema::table('ads', function (Blueprint $table) {
+            $table->string('irigation')->nullable();
+            $table->string('land')->nullable();
+            $table->string('road')->nullable();
+            $table->string('view')->nullable();
+            $table->string('range')->nullable();
+            $table->string('temperature')->nullable();
+            $table->string('height')->nullable();
+            $table->string('notice')->nullable();
         });
     }
 

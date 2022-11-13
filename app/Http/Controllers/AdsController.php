@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ads;
 use App\Models\Wishlists;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ class AdsController extends Controller
      */
     public function index()
     {
-        $ads = Ads::get();
+        $ads = Ads::where('status', '=', 1)->get();
         $search = "";
         return view('ui.list', ['ads' => $ads, 'search' => $search]);
     }
@@ -65,14 +66,14 @@ class AdsController extends Controller
             'desc' => 'required',
             'price' => 'required',
             'period' => 'required',
-            'irigation' => 'required',
-            'land' => 'required',
-            'road' => 'required',
-            'view' => 'required',
-            'range' => 'required',
-            'temperature' => 'required',
-            'height' => 'required',
-            'notice' => 'required',
+            // 'irigation' => 'required',
+            // 'land' => 'required',
+            // 'road' => 'required',
+            // 'view' => 'required',
+            // 'range' => 'required',
+            // 'temperature' => 'required',
+            // 'height' => 'required',
+            // 'notice' => 'required',
             'picture_one' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'picture_two' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'picture_three' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -119,7 +120,7 @@ class AdsController extends Controller
 
         $user->save();
 
-        return redirect()->route('ads')->with('success', 'Iklan anda berhasil dibuat!');
+        return redirect()->route('ads')->with('success', 'Iklan anda berhasil dibuat!, sedang menunggu verifikasi dari admin');
     }
 
     /**
@@ -132,16 +133,26 @@ class AdsController extends Controller
     {
         $ad = Ads::find($id);
         $user = DB::table('customers')->find($ad->id_user);
-        $wishlist = DB::table('wishlists')->where(['id_lahan' => $ad->id, 'id_user' => $user->id])->first();
-        return view('ui.detail', ['ad' => $ad, 'user' => $user, 'wishlist' => $wishlist]);
+
+        $wishlist = null;
+        $booking = null;
+        if(Auth::guard('web')->check()){
+            $wishlist = DB::table('wishlists')->where(['id_lahan' => $ad->id, 'id_user' => Auth::guard('web')->user()->id])->first();
+            $booking = DB::table('bookings')->where(['id_lahan' => $ad->id, 'id_user' => Auth::guard('web')->user()->id])->first();
+        }
+        return view('ui.detail', ['ad' => $ad, 'user' => $user, 'wishlist' => $wishlist, 'booking' => $booking]);
     }
 
     public function updateWishlist(Request $request, $id)
     {
 
+        if(!(Auth::guard('web')->check())){
+            return redirect('login');
+        }
+
         $ad = DB::table('ads')->find($id);
         $user = DB::table('customers')->find($ad->id_user);
-        $wishlist = DB::table('wishlists')->where(['id_lahan' => $ad->id, 'id_user' => $user->id])->first();
+        $wishlist = DB::table('wishlists')->where(['id_lahan' => $ad->id, 'id_user' => Auth::guard('web')->user()->id])->first();
 
         if ($wishlist == null){
             $user = new Wishlists([
@@ -158,6 +169,35 @@ class AdsController extends Controller
         
     }
 
+    public function updateBooking(Request $request, $id)
+    {
+
+        if(!(Auth::guard('web')->check())){
+            return redirect('login');
+        }
+
+        $ad = DB::table('ads')->find($id);
+        $user = DB::table('customers')->find($ad->id_user);
+        $booking = DB::table('bookings')->where(['id_lahan' => $ad->id, 'id_user' => Auth::guard('web')->user()->id])->first();
+
+        if ($booking == null){
+            if ($ad->condition == 1){
+                return redirect()->route('ads.show', $id)->with('error', 'Maaf, anda tidak bisa booking karena lahan telah tersewa!');
+            }
+            $user = new Booking([
+                'id_user' => Auth::guard('web')->user()->id,
+                'id_lahan' => $id,
+            ]);
+            $user->save();
+            return redirect()->route('ads.show', $id)->with('success', 'Booking ditambahkan!');
+        }else{
+            $data = Booking::find($booking->id);
+            $data->delete();
+            return redirect()->route('ads.show', $id)->with('success', 'Booking dihapus!');
+        }
+        
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -167,6 +207,9 @@ class AdsController extends Controller
     public function edit($id)
     {
         $ad = Ads::find($id);
+        if ($ad->status == 0){
+            return redirect()->back();
+        }
         $cats = DB::table('categories')->get();
         return view('ui.adsEdit', ['ad' => $ad, 'cats' => $cats]);
     }
@@ -177,7 +220,7 @@ class AdsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+     */ 
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -189,14 +232,14 @@ class AdsController extends Controller
             'desc' => 'required',
             'price' => 'required',
             'period' => 'required',
-            'irigation' => 'required',
-            'land' => 'required',
-            'road' => 'required',
-            'view' => 'required',
-            'range' => 'required',
-            'temperature' => 'required',
-            'height' => 'required',
-            'notice' => 'required',
+            // 'irigation' => 'required',
+            // 'land' => 'required',
+            // 'road' => 'required',
+            // 'view' => 'required',
+            // 'range' => 'required',
+            // 'temperature' => 'required',
+            // 'height' => 'required',
+            // 'notice' => 'required',
         ]);
 
         $data = Ads::find($id);

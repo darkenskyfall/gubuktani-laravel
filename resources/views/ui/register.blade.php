@@ -56,6 +56,15 @@
             <label for="exampleInputEmail1" class="form-label">Foto Profil</label>
             <input type="file" name="profile_picture" class="form-control" required>
         </div>
+        <hr>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">No KTP</label>
+            <input type="number" name="ktp" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Foto KTP</label>
+            <input type="file" name="ktp_picture" class="form-control" required>
+        </div>
         <p>Sudah Punya Akun? <a href="{{ url('/login') }}">Login Sekarang!</a></p>
         <button type="submit" class="btn btn-primary">Daftar</button>
     </form>

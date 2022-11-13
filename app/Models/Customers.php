@@ -20,5 +20,7 @@ class Customers extends Authenticatable
         'work',
         'password',
         'profile_picture',
+        'ktp',
+        'ktp_picture'
     ];
 }

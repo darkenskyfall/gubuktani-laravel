@@ -56,42 +56,41 @@
             <label for="exampleInputEmail1" class="form-label">Kurun Sewa</label>
             <select class="form-select" name="period" aria-label="Default select example" required>
                 <option>Pilih Kurun Sewa</option>
-                <option value="Bulan">Bulan</option>
                 <option value="Tahun">Tahun</option>
             </select>
         </div>
-        <h4 class="mt-5">Fasilitas*</h4>
+        <h4 class="mt-5">Fasilitas</h4>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Irigasi</label>
-            <input type="text" name="irigation" class="form-control" required>
+            <input type="text" name="irigation" class="form-control" >
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Jenis Tanah</label>
-            <input type="text" name="land" class="form-control" required>
+            <input type="text" name="land" class="form-control" >
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Akses Jalan</label>
-            <input type="text" name="road" class="form-control" required>
+            <input type="text" name="road" class="form-control" >
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Pemandangan</label>
-            <input type="text" name="view" class="form-control" required>
+            <input type="text" name="view" class="form-control" >
         </div>
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Jarak Lahan</label>
-            <input type="text" name="range" class="form-control" required>
+            <label for="exampleInputEmail1" class="form-label">Jarak Sumber Air</label>
+            <input type="text" name="range" class="form-control" >
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Suhu</label>
-            <input type="text" name="temperature" class="form-control" required>
+            <input type="text" name="temperature" class="form-control" >
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Ketinggian</label>
-            <input type="text" name="height" class="form-control" required>
+            <input type="text" name="height" class="form-control" >
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Larangan</label>
-            <textarea name="notice" class="form-control" required cols="30" rows="10"></textarea>
+            <textarea name="notice" class="form-control"  cols="30" rows="10"></textarea>
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Gambar Lahan 1</label>

@@ -53,6 +53,10 @@ use Carbon\Carbon;
                     <p>{{ $customer->work }}</p>
                 </div>
                 <div class="col-md-3">
+                    <b>KTP</b>
+                    <p>{{ $customer->ktp }}</p>
+                </div>
+                <div class="col-md-3">
                     <b>Tanggal Daftar</b>
                     <p>{{ Carbon::parse($customer->created_at)->format('Y/m/d H:i:s'); }}</p>
                 </div>
@@ -62,9 +66,19 @@ use Carbon\Carbon;
                 </div>
             </div>
             <div class="bd-example bd-example-images">
-                <b>Foto Profil</b>
-                <div class="mt-3">
-                    <img src="{{ asset('profiles/' . $customer->profile_picture) }}" alt="{{ $customer->fname }}" class="img-thumbnail fit-image me-2"">
+                <div class="row">
+                    <div class="col-md-3">
+                        <b>Foto Profil</b>
+                        <div class="mt-3">
+                            <img src="{{ asset('profiles/' . $customer->profile_picture) }}" alt="{{ $customer->fname }}" class="img-thumbnail fit-image-profile me-2"">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <b>Foto KTP</b>
+                        <div class="mt-3">
+                            <img src="{{ asset('profiles/' . $customer->ktp_picture) }}" alt="{{ $customer->fname }}" class="img-thumbnail fit-image-profile me-2"">
+                        </div>
+                    </div>
                 </div>
             </div>
             <hr>

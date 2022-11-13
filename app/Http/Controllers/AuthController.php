@@ -63,10 +63,16 @@ class AuthController extends Controller
             'password' => 'required',
             'password_confirm' => 'required|same:password',
             'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'ktp' => 'required|max:16',
+            'ktp_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $imageName = time().'.'.$request->profile_picture->extension();  
         $request->profile_picture->move(public_path('profiles'), $imageName);
+
+        $imageKTP = time().'.'.$request->ktp_picture->extension();  
+        $request->ktp_picture->move(public_path('profiles'), $imageKTP);
+
 
         $user = new Customers([
             'fname' => $request->fname,
@@ -77,6 +83,8 @@ class AuthController extends Controller
             'work' => $request->work,
             'password' => Hash::make($request->password),
             'profile_picture' => $imageName,
+            'ktp' => $request->ktp,
+            'ktp_picture' => $imageKTP,
         ]);
         $user->save();
 

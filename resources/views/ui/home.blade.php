@@ -5,7 +5,6 @@
 @section('content')
 <div class="album py-5">
     <div class="container">
-
         <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -70,5 +69,36 @@
     @endforeach
     </div>
 </div>
+<div class="pb-3 text-white" style="margin-top: 100px;background: url('{{ URL::asset('assets/img/sawah-empat.jpeg') }}') no-repeat; background-size:cover;">
+        <div class="container py-5 text-center">
+            <h1 class="display-5 fw-bold mb-3">Kategori</h1>
+            @foreach($cats as $cat)
+            <a href="{{ route('ads.search', 'search=' . $cat->cateogory) }}" class="btn btn-outline-light">{{$cat->cateogory}}</a>
+            @endforeach
+        </div>
+    </div>
+</div>
+<div class="text-center container">
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+      <div class="col-lg-4">
+      <img src="{{ URL::asset('assets/img/sawah-satu.jpeg') }}" class="rounded-circle" width="140" height="140" alt="...">
+        <h2 class="fw-normal mt-3">Aman Dan Terpercaya</h2>
+        <p>SGubuktani.co.id menghargai dan menjamin privasi data pribadi anda dalam memilih lahan serta memberikan rekomendasi yang terpercaya untuk anda..</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+      <img src="{{ URL::asset('assets/img/sawah-dua.jpeg') }}" class="rounded-circle" width="140" height="140" alt="...">
+
+        <h2 class="fw-normal mt-3">Mudah Dan Cepat</h2>
+        <p>Memberikan kemudahan pada anda dalam memilih lahan sewa dengan kriteria yang anda inginkan dan juga cepat dalam mengolah data yang ingin anda tampilkan..</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+      <img src="{{ URL::asset('assets/img/sawah-tiga.jpeg') }}" class="rounded-circle" width="140" height="140" alt="...">
+
+        <h2 class="fw-normal mt-3">Bersahabat</h2>
+        <p>Posting di Gubuktani.co.id 100% Gratis dan memberikan layanan prima bagi anda dalam mengiklankan lahan anda agar dikenal secara luas oleh masyarakat..</p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
 </div>
 @endsection

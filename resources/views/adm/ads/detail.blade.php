@@ -116,7 +116,7 @@ use Carbon\Carbon;
                     <p>{{ $ad->view }}</p>
                 </div>
                 <div class="col-md-3">
-                    <b>Jarak Lahan</b>
+                    <b>Jarak Sumber Air</b>
                     <p>{{ $ad->range }}</p>
                 </div>
                 <div class="col-md-3">

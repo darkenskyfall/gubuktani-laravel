@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Ads;
 use App\Models\Customers;
 use App\Models\Wishlists;
+use App\Models\Booking;
+use App\Models\Rents;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
@@ -19,16 +22,34 @@ class ProfileController extends Controller
     public function index()
     {
         $customer = Customers::find(Auth::guard('web')->user()->id);
-        $ads = Ads::where('id_user', $customer->id)->get();
+        $ownAds = Ads::where('id_user', $customer->id)->get();
+        $ads = Ads::where('status', 1)->get();
         $wishlists = Wishlists::where('id_user', $customer->id)->get();
+        $bookings = Booking::where('id_user', $customer->id)->get();
+        $rents = Rents::where('id_user', $customer->id)->get();
 
-        $wAds = [];
+        $wIDS = [];
         foreach ($wishlists as $key => $value) {
-            $newAds = $ads->where('id', $value->id_lahan);
-            array_push($wAds, $newAds);
+            array_push($wIDS, $value->id_lahan);
         }
 
-        return view('ui.profile', ['customer' => $customer, 'ads' => $ads, 'wishlists' => $wAds]);
+        $wAds = Ads::find($wIDS);
+
+        $bIDS = [];
+        foreach ($bookings as $key => $value) {
+            array_push($bIDS, $value->id_lahan);
+        }
+
+        $bAds = Ads::find($bIDS);
+
+        $rIDS = [];
+        foreach ($rents as $key => $value) {
+            array_push($rIDS, $value->id_lahan);
+        }
+
+        $rAds = Ads::find($rIDS);
+
+        return view('ui.profile', ['customer' => $customer, 'ads' => $ownAds, 'wishlists' => $wAds, 'bookings' => $bAds, 'rents' => $rAds]);
     }
 
     /**
@@ -154,4 +175,57 @@ class ProfileController extends Controller
     {
         //
     }
+
+    public function updateWishlist(Request $request, $id)
+    {
+
+        if(!(Auth::guard('web')->check())){
+            return redirect('login');
+        }
+
+        $ad = DB::table('ads')->find($id);
+        $user = DB::table('customers')->find($ad->id_user);
+        $wishlist = DB::table('wishlists')->where(['id_lahan' => $ad->id, 'id_user' => Auth::guard('web')->user()->id])->first();
+
+        if ($wishlist == null){
+            $user = new Wishlists([
+                'id_user' => Auth::guard('web')->user()->id,
+                'id_lahan' => $id,
+            ]);
+            $user->save();
+            return redirect()->route('profile', $id)->with('success', 'Wishlist ditambahkan!');
+        }else{
+            $data = Wishlists::find($wishlist->id);
+            $data->delete();
+            return redirect()->route('profile', $id)->with('success', 'Wishlist dihapus!');
+        }
+        
+    }
+
+    public function updateBooking(Request $request, $id)
+    {
+
+        if(!(Auth::guard('web')->check())){
+            return redirect('login');
+        }
+
+        $ad = DB::table('ads')->find($id);
+        $user = DB::table('customers')->find($ad->id_user);
+        $booking = DB::table('bookings')->where(['id_lahan' => $ad->id, 'id_user' => Auth::guard('web')->user()->id])->first();
+
+        if ($booking == null){
+            $user = new Booking([
+                'id_user' => Auth::guard('web')->user()->id,
+                'id_lahan' => $id,
+            ]);
+            $user->save();
+            return redirect()->route('profile', $id)->with('success', 'Booking ditambahkan!');
+        }else{
+            $data = Booking::find($booking->id);
+            $data->delete();
+            return redirect()->route('profile', $id)->with('success', 'Booking dihapus!');
+        }
+        
+    }
+
 }

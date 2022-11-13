@@ -80,7 +80,7 @@
             <div class="col-md-6">
                 <h5>Tambahan</h5>
                 <ul class="list-group mt-3 mb-3">
-                    <li class="list-group-item"><b>Jarak Lahan</b> {{ $ad->irigation }}</li>
+                    <li class="list-group-item"><b>Jarak Sumber Air</b> {{ $ad->irigation }}</li>
                     <li class="list-group-item"><b>Suhu</b> {{ $ad->land }}</li>
                     <li class="list-group-item"><b>Ketinggian</b> {{ $ad->height }}</li>
                 </ul>
@@ -106,18 +106,142 @@
             </div>
         </div>
 
-        @if(Auth::guard('web')->check())
         @if(session('success'))
         <p class="alert alert-success mt-3">{{ session('success') }}</p>
         @endif
+        @if(session('error'))
+        <p class="alert alert-danger mt-3">{{ session('error') }}</p>
+        @endif
+        @if(Auth::guard('web')->check())
+        @if(Auth::guard('web')->user()->id != $ad->id_user)
         <div class="mt-5">
-            <form action="{{ route('ads.update.wishlist', $ad->id) }}" method="post">
-                @csrf
-                <button class="btn {{ ($wishlist == null) ? 'btn-light' : 'btn-danger' }} mb-3">{{ ($wishlist == null) ? 'Tambahkan Wishlist' : 'Hapus dari Wishlist' }}</button>
-            </form>
+            <div class="row">
+                <div class="col-md-2">
+                    <form action="{{ route('ads.update.wishlist', $ad->id) }}" method="post">
+                        @csrf
+                        <button class="btn {{ ($wishlist == null) ? 'btn-light' : 'btn-danger' }} mb-3">{{ ($wishlist == null) ? 'Tambahkan Wishlist' : 'Hapus dari Wishlist' }}</button>
+                    </form>
+
+                </div>
+                <div class="col-md-2">
+                    <form action="{{ route('ads.update.booking', $ad->id) }}" method="post">
+                        @csrf
+                        <button class="btn {{ ($booking == null) ? 'btn-light' : 'btn-danger' }} mb-3">{{ ($booking == null) ? 'Tambahkan Booking' : 'Hapus dari Booking' }}</button>
+                    </form>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ route('rent', $ad->id) }}" class="btn btn-primary">Sewa Lahan</a>
+                </div>
+            </div>
         </div>
         @endif
-
+        @else
+        <div class="mt-5">
+            <div class="row">
+                <div class="col-md-2">
+                    <form action="{{ route('ads.update.wishlist', $ad->id) }}" method="post">
+                        @csrf
+                        <button class="btn {{ ($wishlist == null) ? 'btn-light' : 'btn-danger' }} mb-3">{{ ($wishlist == null) ? 'Tambahkan Wishlist' : 'Hapus dari Wishlist' }}</button>
+                    </form>
+                </div>
+                <div class="col-md-2">
+                    <form action="{{ route('ads.update.booking', $ad->id) }}" method="post">
+                        @csrf
+                        <button class="btn {{ ($booking == null) ? 'btn-light' : 'btn-danger' }} mb-3">{{ ($booking == null) ? 'Tambahkan Booking' : 'Hapus dari Booking' }}</button>
+                    </form>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ route('rent', $ad->id) }}" class="btn btn-primary">Sewa Lahan</a>
+                </div>
+            </div>
+        </div>
+        @endif
+        <div class="mt-5">
+            <div>
+                @php
+                $books = App\Models\Booking::where('id_lahan', $ad->id)->get();
+                @endphp
+                <h3>Daftar Pembooking</h3>
+                <table class="table mt-3">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Alamat</th>
+                            <th>Email</th>
+                            <th>Telepon</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Alamat</th>
+                            <th>Email</th>
+                            <th>Telepon</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @php $no = 1 @endphp
+                        @foreach($books as $book)
+                        <tr>
+                            <td style="width:5%;">{{ $no++ }}</td>
+                            <td>{{ $book->user->fname . ' ' . $book->user->lname }}</td>
+                            <td>{{ $book->user->address }}</td>
+                            <td>{{ $book->user->email }}</td>
+                            <td>{{ $book->user->phone }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-5">
+                @php
+                $books = App\Models\Rents::where('id_lahan', $ad->id)->get();
+                @endphp
+                <h3>Daftar Penyewa</h3>
+                <table class="table mt-3">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Alamat</th>
+                            <th>Email</th>
+                            <th>Telepon</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Alamat</th>
+                            <th>Email</th>
+                            <th>Telepon</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @php $no = 1 @endphp
+                        @foreach($books as $book)
+                        <tr>
+                            <td style="width:5%;">{{ $no++ }}</td>
+                            <td>{{ $book->user->fname . ' ' . $book->user->lname }}</td>
+                            <td>{{ $book->user->address }}</td>
+                            <td>{{ $book->user->email }}</td>
+                            <td>{{ $book->user->phone }}</td>
+                            <td>{{ $book->status == 0 ? "Belum Disetujui" : "Disetujui" }}</td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" href="{{ route('rent.show.fromAds', $book->id) }}"><i class="fas fa-pencil"></i></a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

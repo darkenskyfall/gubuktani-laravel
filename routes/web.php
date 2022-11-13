@@ -12,6 +12,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginAdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,12 +67,24 @@ Route::middleware(['web'])->group(function () {
         Route::get('/edit/{id}',[AdsController::class, 'edit'])->name('ads.edit');
         Route::post('/update/{id}',[AdsController::class, 'update'])->name('ads.update');
         Route::post('/wishlist/{id}',[AdsController::class, 'updateWishlist'])->name('ads.update.wishlist');
+        Route::post('/booking/{id}',[AdsController::class, 'updateBooking'])->name('ads.update.booking');
     });
     Route::get('/profil',[ProfileController::class, 'index'])->name('profile');
-    Route::get('/profil-edit/{id}',[ProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('/profil-edit/{id}',[ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/ganti-password/{id}',[ProfileController::class, 'changePassword'])->name('profile.change.password');
-    Route::post('/ganti-password/{id}',[ProfileController::class, 'updatePassword'])->name('profile.change.password.update');
+    Route::prefix('profil')->group(function () {
+        Route::get('/edit/{id}',[ProfileController::class, 'edit'])->name('profile.edit');
+        Route::post('/edit/{id}',[ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/ganti-password/{id}',[ProfileController::class, 'changePassword'])->name('profile.change.password');
+        Route::post('/ganti-password/{id}',[ProfileController::class, 'updatePassword'])->name('profile.change.password.update');
+        Route::post('/booking/{id}',[ProfileController::class, 'updateBooking'])->name('profile.update.booking');
+        Route::post('/wishlist/{id}',[ProfileController::class, 'updateWishlist'])->name('profile.update.wishlist');
+    });
+    Route::prefix('sewa')->group(function () {
+        Route::get('/form/{id}',[RentController::class, 'form'])->name('rent'); 
+        Route::post('/form/{id}',[RentController::class, 'store'])->name('rent.store'); 
+        Route::get('/detail/{id}',[RentController::class, 'show'])->name('rent.show'); 
+        Route::get('/detail/ads/{id}',[RentController::class, 'showFromAdsDetail'])->name('rent.show.fromAds'); 
+        Route::post('/update/{id}',[RentController::class, 'update'])->name('rent.update'); 
+    });
     Route::post('/hapus/{id}',[AdsController::class, 'destroy'])->name('ads.delete');
     Route::get('/logout',[AuthController::class, 'logout'])->name('login.logout');
 });

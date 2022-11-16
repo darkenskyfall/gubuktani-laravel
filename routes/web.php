@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedbackControler;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InstalmentController;
 use App\Http\Controllers\LoginAdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RentController;
@@ -84,6 +85,9 @@ Route::middleware(['web'])->group(function () {
         Route::get('/detail/{id}',[RentController::class, 'show'])->name('rent.show'); 
         Route::get('/detail/ads/{id}',[RentController::class, 'showFromAdsDetail'])->name('rent.show.fromAds'); 
         Route::post('/update/{id}',[RentController::class, 'update'])->name('rent.update'); 
+        Route::get('/unggah-bukti-bayar/{id}',[RentController::class, 'showUploadForm'])->name('rent.upload'); 
+        Route::post('/unggah-bukti-bayar/{id}',[RentController::class, 'uploadProofOfPayment'])->name('rent.upload.update'); 
+        Route::post('/persetujuan/{id}',[RentController::class, 'approveProofOfPayment'])->name('rent.approvement'); 
     });
     Route::post('/hapus/{id}',[AdsController::class, 'destroy'])->name('ads.delete');
     Route::get('/logout',[AuthController::class, 'logout'])->name('login.logout');

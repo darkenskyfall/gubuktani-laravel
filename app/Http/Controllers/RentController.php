@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Ads;
 use App\Models\Booking;
+use App\Models\Instalments;
 use App\Models\Rents;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -63,7 +65,7 @@ class RentController extends Controller
         $agreement = time().'.'.$request->agreement_photo->extension();  
         $request->agreement_photo->move(public_path('agreement'), $agreement);
 
-        $user = new Rents([
+        $data = new Rents([
             'id_user' => Auth::guard('web')->user()->id,
             'id_lahan' => $request->id_lahan,
             'done_price' => $request->done_price,
@@ -74,7 +76,7 @@ class RentController extends Controller
             'status' => 0,
         ]);
 
-        $user->save();
+        $data->save();
 
         return redirect()->route('ads')->with('success', 'Proses sewa berhasil dikirim, silahkan tunggu persetujuan dari pemilik lahan');
     }
@@ -90,13 +92,85 @@ class RentController extends Controller
         $ad = Ads::find($id);
         $user = Auth::guard('web')->user();
         $rent = Rents::firstWhere(['id_lahan' => $ad->id, 'id_user' => $user->id]);
-        return view('ui.rentDetail', ['ad' => $ad, 'rent' => $rent]);
+        if ($rent->method == 0){
+            $instalment = Instalments::where('id_rent', $rent->id)->whereMonth('created_at', '=', Carbon::now()->month)->first();
+            $instalList = Instalments::where('id_rent', $rent->id)->get();
+            $total = $instalList->sum('amount');
+            $current = ($rent->done_price - $total);
+            if ($current <= $total){
+                $rent->status_instalment = 1;
+                $rent->save();
+                return view('ui.rentDetail', ['ad' => $ad, 'rent' => $rent, 'instalments' => $instalList]);
+            }
+            if ($instalment == null){
+                $data = new Instalments([
+                    'id_user' => $rent->id_user,
+                    'id_lahan' => $ad->id,
+                    'id_rent' => $rent->id,
+                    'month' => Carbon::now()->format('F') . " " . Carbon::now()->format('Y'),
+                    'amount' => ($rent->done_price / (12*$rent->period)),
+                    'status' => 0,
+                ]);
+                $data->save();
+            }
+        }
+        return view('ui.rentDetail', ['ad' => $ad, 'rent' => $rent, 'instalments' => $instalList]);
     }
 
     public function showFromAdsDetail($id){
         $rent = Rents::find($id);
         $ad = Ads::find($rent->id_lahan);
-        return view('ui.rentDetail', ['ad' => $ad, 'rent' => $rent]);
+        if ($rent->method == 0){
+            $instalment = Instalments::where('id_rent', $rent->id)->whereMonth('created_at', '=', Carbon::now()->month)->first();
+            $instalList = Instalments::where('id_rent', $rent->id)->get();
+            $total = $instalList->sum('amount');
+            $current = ($rent->done_price - $total);
+            if ($current <= $total){
+                $rent->status_instalment = 1;
+                $rent->save();
+                return view('ui.rentDetail', ['ad' => $ad, 'rent' => $rent, 'instalments' => $instalList]);
+            }
+            if ($instalment == null){
+                $data = new Instalments([
+                    'id_user' => $rent->id_user,
+                    'id_lahan' => $ad->id,
+                    'id_rent' => $rent->id,
+                    'month' => Carbon::now()->format('F') . " " . Carbon::now()->format('Y'),
+                    'amount' => ($rent->done_price / (12*$rent->period)),
+                    'status' => 0,
+                ]);
+                $data->save();
+            }
+        }
+        $instalList = Instalments::where('id_rent', $rent->id)->get();
+        return view('ui.rentDetail', ['ad' => $ad, 'rent' => $rent, 'instalments' => $instalList]);
+    }
+
+    public function showUploadForm($id){
+        $instalment = Instalments::find($id);
+        if ($instalment->proof_of_payment != null){
+            return redirect()->back();
+        }
+        return view('ui.rentUpload', ['instalment' => $instalment]);
+    }
+
+    public function uploadProofOfPayment(Request $request, $id){
+        $instalment = Instalments::find($id);
+        $request->validate([
+            'proof_of_payment' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $img = time().'.'.$request->proof_of_payment->extension();  
+        $request->proof_of_payment->move(public_path('ProofOfPayments'), $img);
+        $instalment->proof_of_payment = $img;
+        $instalment->save();
+        return redirect()->route('rent.show.fromAds', $instalment->id_rent)->with('success', 'Bukti bayar berhasil diunggah');
+    }
+
+    public function approveProofOfPayment($id){
+        $instalment = Instalments::find($id);
+        $instalment->status = 1;
+        $instalment->save();
+        return redirect()->route('rent.show.fromAds', $instalment->id_rent)->with('success', 'Cicilan berhasil disetujui');
     }
 
     /**

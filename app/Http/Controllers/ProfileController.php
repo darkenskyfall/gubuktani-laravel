@@ -23,7 +23,6 @@ class ProfileController extends Controller
     {
         $customer = Customers::find(Auth::guard('web')->user()->id);
         $ownAds = Ads::where('id_user', $customer->id)->get();
-        $ads = Ads::where('status', 1)->get();
         $wishlists = Wishlists::where('id_user', $customer->id)->get();
         $bookings = Booking::where('id_user', $customer->id)->get();
         $rents = Rents::where('id_user', $customer->id)->get();

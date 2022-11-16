@@ -5,19 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Rents extends Model
+class Instalments extends Model
 {
     use HasFactory;
     protected $fillable = [
         'id_user',
         'id_lahan',
-        'done_price',
-        'period',
-        'period_type',
-        'method',
-        'agreement_photo',
-        'status',
-        'status_instalment'
+        'id_rent',
+        'month',
+        'amount',
+        'proof_of_payment',
+        'status'
     ];
 
     public function user()
@@ -30,4 +28,8 @@ class Rents extends Model
         return $this->belongsTo(Ads::class, 'id_lahan');
     }
 
+    public function rent()
+    {
+        return $this->belongsTo(Rents::class, 'id_rent');
+    }
 }

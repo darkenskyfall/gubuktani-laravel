@@ -156,6 +156,8 @@
             </div>
         </div>
         @endif
+        @if(Auth::guard('web')->check())
+        @if(Auth::guard('web')->user()->id == $ad->id_user)
         <div class="mt-5">
             <div>
                 @php
@@ -235,6 +237,8 @@
                             <td>{{ $book->status == 0 ? "Belum Disetujui" : "Disetujui" }}</td>
                             <td>
                                 <a class="btn btn-sm btn-primary" href="{{ route('rent.show.fromAds', $book->id) }}"><i class="fas fa-pencil"></i></a>
+                                <!-- Riwayat Cicilan -->
+                                <a class="btn btn-sm btn-warning" href="{{ route('rent.show.fromAds', $book->id) }}"><i class="fas fa-eye"></i></a>
                             </td>
                         </tr>
                         @endforeach
@@ -242,6 +246,8 @@
                 </table>
             </div>
         </div>
+        @endif
+        @endif
     </div>
 </div>
 @endsection

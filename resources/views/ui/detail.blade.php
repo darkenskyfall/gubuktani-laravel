@@ -92,7 +92,7 @@
         <p>{{ $ad->notice }}</p>
 
         <h5>Harga Sewa</h5>
-        <p>Rp. 1.000.000/Tahun</p>
+        <p>Rp. {{ number_format($ad->price) }}/{{ $ad->period }}</p>
 
         <div class="paragraphs mt-5">
             <div class="row">
@@ -126,7 +126,11 @@
                 <div class="col-md-2">
                     <form action="{{ route('ads.update.booking', $ad->id) }}" method="post">
                         @csrf
+                        @if($booking == null)
+                        <a href="{{ route('ads.show.booking', $ad->id) }}" class="btn {{ ($booking == null) ? 'btn-light' : 'btn-danger' }} mb-3">{{ ($booking == null) ? 'Tambahkan Booking' : 'Hapus dari Booking' }}</a>
+                        @else
                         <button class="btn {{ ($booking == null) ? 'btn-light' : 'btn-danger' }} mb-3">{{ ($booking == null) ? 'Tambahkan Booking' : 'Hapus dari Booking' }}</button>
+                        @endif
                     </form>
                 </div>
                 <div class="col-md-2">
@@ -147,7 +151,11 @@
                 <div class="col-md-2">
                     <form action="{{ route('ads.update.booking', $ad->id) }}" method="post">
                         @csrf
+                        @if($booking == null)
+                        <a href="{{ route('ads.show.booking', $ad->id) }}" class="btn {{ ($booking == null) ? 'btn-light' : 'btn-danger' }} mb-3">{{ ($booking == null) ? 'Tambahkan Booking' : 'Hapus dari Booking' }}</a>
+                        @else
                         <button class="btn {{ ($booking == null) ? 'btn-light' : 'btn-danger' }} mb-3">{{ ($booking == null) ? 'Tambahkan Booking' : 'Hapus dari Booking' }}</button>
+                        @endif
                     </form>
                 </div>
                 <div class="col-md-2">
@@ -172,6 +180,7 @@
                             <th>Alamat</th>
                             <th>Email</th>
                             <th>Telepon</th>
+                            <th>Tanggal Survey</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -181,6 +190,7 @@
                             <th>Alamat</th>
                             <th>Email</th>
                             <th>Telepon</th>
+                            <th>Tanggal Survey</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -192,6 +202,7 @@
                             <td>{{ $book->user->address }}</td>
                             <td>{{ $book->user->email }}</td>
                             <td>{{ $book->user->phone }}</td>
+                            <td>{{ App\Models\Booking::where(['id_lahan' => $ad->id, 'id_user' => $book->user->id])->first()->survey_date ?? "Tidak ada survey" }}</td>
                         </tr>
                         @endforeach
                     </tbody>

@@ -22,7 +22,7 @@
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email</label>
-            <input type="text" name="email" class="form-control" required>
+            <input type="email" name="email" class="form-control" required>
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Alamat</label>
@@ -59,7 +59,7 @@
         <hr>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">No KTP</label>
-            <input type="number" name="ktp" class="form-control" required>
+            <input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength = "16" name="ktp" class="form-control" required>
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Foto KTP</label>

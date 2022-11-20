@@ -74,6 +74,7 @@ class RentController extends Controller
             'method' => $request->method,
             'agreement_photo' => $agreement,
             'status' => 0,
+            'status_instalment' => 0,
         ]);
 
         $data->save();

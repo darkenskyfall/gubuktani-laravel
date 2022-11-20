@@ -54,7 +54,7 @@
                     <ul class="mt-3">
                         <li><b>{{ $ad->categories->cateogory }}</b></li>
                         <li>Luas {{ $ad->large }}</li>
-                        <li>Rp. {{ $ad->price }} / {{ $ad->period }}</li>
+                        <li>Rp. {{ number_format($ad->price) }} / {{ $ad->period }}</li>
                     </ul>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div class="btn-group">

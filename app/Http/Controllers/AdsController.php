@@ -169,6 +169,14 @@ class AdsController extends Controller
         
     }
 
+    public function showBooking($id){
+        if(!(Auth::guard('web')->check())){
+            return redirect('login');
+        }
+        $ad = Ads::find($id);
+        return view('ui.booking', ['ad' => $ad]);
+    }
+
     public function updateBooking(Request $request, $id)
     {
 
@@ -188,6 +196,9 @@ class AdsController extends Controller
                 'id_user' => Auth::guard('web')->user()->id,
                 'id_lahan' => $id,
             ]);
+            if ($request->survey_date != null){
+                $user->survey_date = $request->survey_date;
+            }
             $user->save();
             return redirect()->route('ads.show', $id)->with('success', 'Booking ditambahkan!');
         }else{

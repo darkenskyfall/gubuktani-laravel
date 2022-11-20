@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 26, 2022 at 03:44 PM
+-- Generation Time: Nov 18, 2022 at 01:47 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -86,9 +86,31 @@ CREATE TABLE `ads` (
 --
 
 INSERT INTO `ads` (`id`, `id_user`, `id_category`, `title`, `address`, `large`, `certification`, `desc`, `price`, `period`, `status`, `condition`, `irigation`, `land`, `road`, `view`, `picture_one`, `picture_two`, `picture_three`, `picture_four`, `created_at`, `updated_at`, `range`, `temperature`, `height`, `notice`) VALUES
-(3, 1, 1, 'Disewakan Sawah Dekat Manukan', 'test', '5 Ha', 'SHM - Sertifikat Hak Milik', 'Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.', 1000000, 'Bulan', 1, '1', 'test', 'test', 'test', 'test', '1666184498.jpg', '1666184498.png', '1666184498.jpg', '1666184498.png', '2022-10-19 06:01:38', '2022-10-19 22:16:21', '2 Km', '15C', '100 mdpl', 'Jangan Merokok'),
-(4, 1, 1, 'Disewakan Sawah Dekat Simo', 'test', '5 Ha', 'SHM - Sertifikat Hak Milik', 'Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.', 1000000, 'Bulan', 1, '0', 'test', 'test', 'test', 'test', '1666184498.jpg', '1666184498.png', '1666184498.jpg', '1666184498.png', '2022-10-19 06:01:38', '2022-10-19 06:01:38', '2 Km', '15C', '100 mdpl', 'Jangan Merokok'),
-(7, 3, 4, 'tes', 'tes', '200', 'SHM - Sertifikat Hak Milik', 'test', 10000, 'Bulan', 0, '0', NULL, NULL, NULL, NULL, '1666789973.png', '1666789973.png', '1666789973.png', '1666789973.png', '2022-10-26 06:12:53', '2022-10-26 06:12:53', NULL, NULL, NULL, NULL);
+(3, 1, 1, 'Disewakan Sawah Dekat Manukan', 'test', '5 Ha', 'SHM - Sertifikat Hak Milik', 'Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.', 1000000, 'Tahun', 1, '0', 'test', 'test', 'test', 'test', '1666184498.jpg', '1666184498.png', '1666184498.jpg', '1666184498.png', '2022-10-19 06:01:38', '2022-10-19 22:16:21', '2 Km', '15C', '100 mdpl', 'Jangan Merokok'),
+(4, 1, 1, 'Disewakan Sawah Dekat Simo', 'test', '5 Ha', 'SHM - Sertifikat Hak Milik', 'Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.', 1000000, 'Tahun', 1, '0', 'test', 'test', 'test', 'test', '1666184498.jpg', '1666184498.png', '1666184498.jpg', '1666184498.png', '2022-10-19 06:01:38', '2022-11-15 05:20:50', '2 Km', '15C', '100 mdpl', 'Jangan Merokok'),
+(7, 3, 4, 'tes', 'tes', '200', 'SHM - Sertifikat Hak Milik', 'test', 10000, 'Tahun', 0, '0', NULL, NULL, NULL, NULL, '1666789973.png', '1666789973.png', '1666789973.png', '1666789973.png', '2022-10-26 06:12:53', '2022-10-26 06:12:53', NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bookings`
+--
+
+CREATE TABLE `bookings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_lahan` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `survey_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`id`, `id_user`, `id_lahan`, `created_at`, `updated_at`, `survey_date`) VALUES
+(8, 4, 4, '2022-11-18 05:39:01', '2022-11-18 05:39:01', '2022-11-18');
 
 -- --------------------------------------------------------
 
@@ -128,16 +150,19 @@ CREATE TABLE `customers` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `profile_picture` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `ktp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ktp_picture` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`id`, `fname`, `lname`, `email`, `address`, `phone`, `work`, `password`, `profile_picture`, `created_at`, `updated_at`) VALUES
-(1, 'Ferdy', 'Sambo Narapidana', 'sambo@mailinator.com', 'Mako Brimob', '081222333444', 'POLRI', '$2y$10$oPAVD9Hfm3Cz4b4h2k5GuOV3P3dYyYD/6p1nOQ2o.X4O9Skwpi0AK', '1666182051.jpg', '2022-10-19 05:20:51', '2022-10-20 20:48:18'),
-(3, 'bagas', 'salosa', 'bagas@mailinator.com', 'Bagas', '081222333444', 'POLRI', '$2y$10$FRqf0gVf.tRjcV5t8ZfcqeoFbalvmom87ZwvIgmZ2/SuydL/XOgqO', '1666787934.png', '2022-10-26 05:38:54', '2022-10-26 05:38:54');
+INSERT INTO `customers` (`id`, `fname`, `lname`, `email`, `address`, `phone`, `work`, `password`, `profile_picture`, `created_at`, `updated_at`, `ktp`, `ktp_picture`) VALUES
+(1, 'Ferdy', 'Sambo Narapidana', 'sambo@mailinator.com', 'Mako Brimob', '081222333444', 'POLRI', '$2y$10$oPAVD9Hfm3Cz4b4h2k5GuOV3P3dYyYD/6p1nOQ2o.X4O9Skwpi0AK', '1666182051.jpg', '2022-10-19 05:20:51', '2022-10-20 20:48:18', '', ''),
+(3, 'bagas', 'salosa', 'bagas@mailinator.com', 'Bagas', '081222333444', 'POLRI', '$2y$10$FRqf0gVf.tRjcV5t8ZfcqeoFbalvmom87ZwvIgmZ2/SuydL/XOgqO', '1666787934.png', '2022-10-26 05:38:54', '2022-10-26 05:38:54', '', ''),
+(4, 'dimas', 'pramudya', 'dimasrajawali76@gmail.com', 'manukan', '081222333444', 'TNI', '$2y$10$kl1oQBpXIY83iW0jXI4ooehv2J7W4sx5hvxNNm3DLBGOJKYWKav5i', '1668343179.png', '2022-11-13 05:39:39', '2022-11-13 05:39:39', '1234567890123456', '1668343179.png');
 
 -- --------------------------------------------------------
 
@@ -180,6 +205,32 @@ INSERT INTO `feedbacks` (`id`, `name`, `email`, `desc`, `created_at`, `updated_a
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `instalments`
+--
+
+CREATE TABLE `instalments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_lahan` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `month` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` double(8,2) NOT NULL,
+  `proof_of_payment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `id_rent` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `instalments`
+--
+
+INSERT INTO `instalments` (`id`, `id_lahan`, `id_user`, `month`, `amount`, `proof_of_payment`, `status`, `created_at`, `updated_at`, `id_rent`) VALUES
+(5, 4, 4, 'November 2022', 83333.33, '1668577680.png', 0, '2022-11-15 22:44:15', '2022-11-15 22:48:00', 2);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -205,7 +256,16 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (9, '2022_10_20_013432_create_table_categories', 5),
 (10, '2022_10_20_060728_create_table_feedbacks', 6),
 (11, '2022_10_20_151010_create_table_wishlists', 7),
-(12, '2022_10_26_130805_update_table_ads', 8);
+(12, '2022_10_26_130805_update_table_ads', 8),
+(13, '2022_11_05_111709_create_booking_table', 9),
+(14, '2022_11_05_120846_add_ktp_to_customer', 9),
+(15, '2022_11_13_140353_create_rent_table', 10),
+(16, '2022_11_13_141800_add_status_rent_table', 11),
+(17, '2022_11_16_025733_add_status_instalment_rents_table', 12),
+(18, '2022_11_16_033318_create_table_instalment', 13),
+(19, '2022_11_16_034402_add_id_rent_instalment_table', 14),
+(20, '2022_11_18_120857_add_column_date_booking_table', 15),
+(21, '2022_11_18_121107_add_column_date_booking_table', 16);
 
 -- --------------------------------------------------------
 
@@ -237,6 +297,34 @@ CREATE TABLE `personal_access_tokens` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rents`
+--
+
+CREATE TABLE `rents` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_lahan` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `done_price` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `period` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `period_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `method` int(11) NOT NULL,
+  `agreement_photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `status_instalment` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `rents`
+--
+
+INSERT INTO `rents` (`id`, `id_lahan`, `id_user`, `done_price`, `period`, `period_type`, `method`, `agreement_photo`, `created_at`, `updated_at`, `status`, `status_instalment`) VALUES
+(2, 4, 4, '1000000', '1', 'Tahun', 0, '1668514809.png', '2022-11-15 05:20:09', '2022-11-15 05:20:50', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -286,6 +374,12 @@ ALTER TABLE `ads`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
@@ -311,6 +405,12 @@ ALTER TABLE `feedbacks`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `instalments`
+--
+ALTER TABLE `instalments`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -329,6 +429,12 @@ ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
+-- Indexes for table `rents`
+--
+ALTER TABLE `rents`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -360,6 +466,12 @@ ALTER TABLE `ads`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `bookings`
+--
+ALTER TABLE `bookings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
@@ -369,7 +481,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -384,16 +496,28 @@ ALTER TABLE `feedbacks`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `instalments`
+--
+ALTER TABLE `instalments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `rents`
+--
+ALTER TABLE `rents`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -405,7 +529,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wishlists`
 --
 ALTER TABLE `wishlists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

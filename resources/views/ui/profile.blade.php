@@ -113,26 +113,6 @@ use Carbon\Carbon;
                             <td>{{ $ad->categories->cateogory }}</td>
                             <td><button class="btn btn-sm {{ ($ad->status == 0) ? 'btn-danger' : 'btn-success' }} disabled">{{ ($ad->status == 0) ? "Belum terverifikasi" : "Terverifikasi" }}</button></td>
                             <td><button class="btn btn-sm {{ ($ad->condition == 1) ? 'btn-danger' : 'btn-primary' }} disabled">{{ ($ad->condition == 1) ? "Tersewa" : "Tersedia" }}</button></td>
-                            <!-- <td>
-                                @php
-                                $books = App\Models\Booking::where('id_lahan', $ad->id)->get();
-                                @endphp
-                                <ul>
-                                    @foreach($books as $book)
-                                    <li>{{ $book->user->fname . ' ' . $book->user->lname }} [{{ $book->user->phone }}]</li>
-                                    @endforeach
-                                </ul>
-                            </td>
-                            <td>
-                                @php
-                                $books = App\Models\Rents::where('id_lahan', $ad->id)->get();
-                                @endphp
-                                <ul>
-                                    @foreach($books as $book)
-                                    <li>{{ $book->user->fname . ' ' . $book->user->lname }} [{{ $book->user->phone }}]</li>
-                                    @endforeach
-                                </ul>
-                            </td> -->
                             <td style="width:15%;">
                                 <form action="{{ route('ads.delete', $ad->id) }}" method="post">
                                     @csrf
@@ -210,9 +190,9 @@ use Carbon\Carbon;
                         @foreach($wishlists as $wishlist)
                         <tr>
                             <td style="width:5%;">{{ $no++ }}</td>
-                            <td>{{ $wishlist->first()->title }}</td>
-                            <td>{{ $wishlist->first()->address }}</td>
-                            <td>{{ $wishlist->first()->categories->cateogory }}</td>
+                            <td>{{ $wishlist->title }}</td>
+                            <td>{{ $wishlist->address }}</td>
+                            <td>{{ $wishlist->categories->cateogory }}</td>
                             <td><button class="btn btn-sm {{ ($wishlist->first()->condition == 1) ? 'btn-danger' : 'btn-primary' }} disabled">{{ ($wishlist->first()->condition == 1) ? "Tersewa" : "Tersedia" }}</button></td>
                             <td style="width:15%;">
                                 <form action="{{ route('profile.update.wishlist', $wishlist->id) }}" method="post">
@@ -235,6 +215,7 @@ use Carbon\Carbon;
                             <th>Alamat</th>
                             <th>Kategori</th>
                             <th>Kondisi</th>
+                            <th>Tanggal Survey</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -245,6 +226,7 @@ use Carbon\Carbon;
                             <th>Alamat</th>
                             <th>Kategori</th>
                             <th>Kondisi</th>
+                            <th>Tanggal Survey</th>
                             <th>Aksi</th>
                         </tr>
                     </tfoot>
@@ -253,14 +235,15 @@ use Carbon\Carbon;
                         @foreach($bookings as $booking)
                         <tr>
                             <td style="width:5%;">{{ $no++ }}</td>
-                            <td>{{ $booking->first()->title }}</td>
-                            <td>{{ $booking->first()->address }}</td>
-                            <td>{{ $booking->first()->categories->cateogory }}</td>
-                            <td><button class="btn btn-sm {{ ($booking->first()->condition == 1) ? 'btn-danger' : 'btn-primary' }} disabled">{{ ($booking->first()->condition == 1) ? "Tersewa" : "Tersedia" }}</button></td>
+                            <td>{{ $booking->title }}</td>
+                            <td>{{ $booking->address }}</td>
+                            <td>{{ $booking->categories->cateogory }}</td>
+                            <td><button class="btn btn-sm {{ ($booking->condition == 1) ? 'btn-danger' : 'btn-primary' }} disabled">{{ ($booking->condition == 1) ? "Tersewa" : "Tersedia" }}</button></td>
+                            <td>{{ App\Models\Booking::where(['id_lahan' => $booking->id, 'id_user' => Auth::guard('web')->user()->id])->first()->survey_date ?? "Tidak ada survey" }}</td>
                             <td style="width:15%;">
                                 <form action="{{ route('profile.update.booking', $booking->id) }}" method="post">
                                     @csrf
-                                    <a class="btn btn-sm btn-warning" href="{{ route('ads.show', $booking->first()->id) }}"><i class="fas fa-eye"></i></a>
+                                    <a class="btn btn-sm btn-warning" href="{{ route('ads.show', $booking->id) }}"><i class="fas fa-eye"></i></a>
                                     <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                 </form>
                             </td>

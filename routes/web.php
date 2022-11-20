@@ -79,6 +79,7 @@ Route::middleware(['web'])->group(function () {
         Route::post('/booking/{id}',[ProfileController::class, 'updateBooking'])->name('profile.update.booking');
         Route::post('/wishlist/{id}',[ProfileController::class, 'updateWishlist'])->name('profile.update.wishlist');
     });
+    Route::get('/booking/{id}',[AdsController::class, 'showBooking'])->name('ads.show.booking'); 
     Route::prefix('sewa')->group(function () {
         Route::get('/form/{id}',[RentController::class, 'form'])->name('rent'); 
         Route::post('/form/{id}',[RentController::class, 'store'])->name('rent.store'); 

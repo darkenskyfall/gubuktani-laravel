@@ -56,7 +56,7 @@ class FeedbackControler extends Controller
         ]);
         $data->save();
 
-        return redirect()->route('contact')->with('success', 'Umpan balik berhasil dikirim!');
+        return redirect()->route('about')->with('success', 'Umpan balik berhasil dikirim!');
     }
 
     /**

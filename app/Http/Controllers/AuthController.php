@@ -54,12 +54,12 @@ class AuthController extends Controller
     public function createRegister(Request $request)
     {
         $request->validate([
-            'fname' => 'required',
-            'lname' => 'required',
-            'email' => 'required|unique:customers',
-            'address' => 'required',
-            'phone' => 'required',
-            'work' => 'required',
+            'fname' => 'required|max:50',
+            'lname' => 'required|max:50',
+            'email' => 'required|unique:customers|max:50',
+            'address' => 'required|max:50',
+            'phone' => 'required|max:50',
+            'work' => 'required|in:TNI,POLRI,ASN,PNS,Swasta,Lainnya',
             'password' => 'required',
             'password_confirm' => 'required|same:password',
             'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

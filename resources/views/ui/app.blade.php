@@ -68,7 +68,7 @@
     }
 
     .carousel-inner>.carousel-item>img {
-        border-radius: 22px;
+        border-radius: 8px;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -146,16 +146,16 @@
 
     </main>
 
-    <div class="pb-3 bg-dark text-white" style="margin-top: 100px;">
+    <!-- <div class="pb-3 bg-dark text-white" style="margin-top: 100px;">
         <div class="container py-5">
             <h1 class="display-5 fw-bold mb-5">Gubuktani.co.id<br>Website Sewa Lahan Terbaik Di Indonesia</h1>
             <p>Gubuktani menyajikan informasi sewa lahan, lengkap dengan fasilitas lahan, harga lahan, dan deskripsi lahan beserta foto lahan sawah yang disesuaikan dengan kondisi sebenarnya. info lahan kami akurat dan bermanfaat untuk penyewa lahan sawah. Saat ini kami memiliki lebih dari beberapa info lahan sawah dan masih terus bertambah di Indonesia. Data lahan sawah yang kami miliki telah mencakup beberapa provinsi besar seperti jawa timur, jawa tengah, jawa barat, hingga kalimantan dan Sumatra. Pengembangan data lahan sawah masih terus kami usahakan. Namun demikian, kamu dapat request penambahan info lahan sawah di seputar area yang kamu inginkan dengan mengisi data di Umpan Balik Kami. Kamu juga dapat menambahkan masukan, saran dan kritikan untuk Gubuktani di form tersebut. Dukungan kamu, akan mempercepat pengembangan data lahan yang kami miliki.</p>
             <p>Jika kamu ingin mendapatkan inspirasi lahan yang sangat ciamik atau bisa cek lahan eksklusif yang ada di Gubuktani. Dengan luas lahan yang relatif, kebanyakan lahan eksklusif hanya diberikan lahan strategis atau keuntungan yang lebih menarik, ditambah pemandangan beserta kesejukan lahan tersebut sebagai tempat wisata yang menghasilkan, dengan tambahan . Di Gubuktani kini juga telah ditambahkan berbagai info lahan dengan harga murah ataupun beberapa tipe lahan lain sesuai masukan dari pengguna Gubuktani.</p>
         </div>
-    </div>
+    </div> -->
 
 
-    <footer class="d-flex flex-wrap justify-content-between align-items-center p-3 text-white" style="background: #2ecc71;">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center p-3 text-white" style="background: #2ecc71; margin-top:100px;">
         <p class="col-md-4 mb-0">&copy; 2022 Gubuktani.co.id</p>
 
         <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
@@ -168,6 +168,7 @@
             <li class="nav-item"><a href="{{ route('policy') }}" class="nav-link px-2 text-white">Kebijakan Privasi</a></li>
             <li class="nav-item"><a href="{{ route('help') }}" class="nav-link px-2 text-white">Bantuan</a></li>
             <li class="nav-item"><a href="{{ route('contact') }}" class="nav-link px-2 text-white">Kontak</a></li>
+            <li class="nav-item"><a href="{{ route('about') }}" class="nav-link px-2 text-white">Tentang Kami</a></li>
         </ul>
     </footer>
 

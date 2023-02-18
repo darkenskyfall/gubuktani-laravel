@@ -35,10 +35,7 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Kurun Sewa</label>
-                    <select class="form-select" name="period_type" aria-label="Default select example" required>
-                        <option>Pilih Kurun Sewa</option>
-                        <option value="Tahun">Tahun</option>
-                    </select>
+                    <input type="text" name="period_type" class="form-control" value="Tahun" readonly>
                 </div>
             </div>
         </div>

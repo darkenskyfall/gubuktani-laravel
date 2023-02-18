@@ -101,31 +101,31 @@ use Carbon\Carbon;
             <div class="row mt-3">
                 <div class="col-md-3">
                     <b>Irigasi</b>
-                    <p>{{ $ad->irigation }}</p>
+                    <p>{{ ($ad->is_irigation == 1) ? ($ad->irigation ?? "Penjelas tidak ada") : "Tidak ada irigasi"}}</p>
                 </div>
                 <div class="col-md-3">
                     <b>Tanah</b>
-                    <p>{{ $ad->land }}</p>
+                    <p>{{ $facility->land ?? "Data tidak ada" }}</p>
                 </div>
                 <div class="col-md-3">
                     <b>Akses Jalan</b>
-                    <p>{{ $ad->road }}</p>
+                    <p>{{ $facility->road ?? "Data tidak ada" }}</p>
                 </div>
                 <div class="col-md-3">
                     <b>Pemandangan</b>
-                    <p>{{ $ad->view }}</p>
+                    <p>{{ $facility->view ?? "Data tidak ada" }}</p>
                 </div>
                 <div class="col-md-3">
                     <b>Jarak Sumber Air</b>
-                    <p>{{ $ad->range }}</p>
+                    <p>{{ $facility->range ?? "Data tidak ada" }}</p>
                 </div>
                 <div class="col-md-3">
                     <b>Suhu</b>
-                    <p>{{ $ad->temperature }}</p>
+                    <p>{{ $facility->temperature ?? "Data tidak ada" }}</p>
                 </div>
                 <div class="col-md-3">
                     <b>Ketinggian </b>
-                    <p>{{ $ad->height }}</p>
+                    <p>{{ $facility->height ?? "Data tidak ada" }}</p>
                 </div>
             </div>
             <div class="col-md-3">

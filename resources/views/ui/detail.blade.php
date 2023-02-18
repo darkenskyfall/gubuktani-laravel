@@ -10,7 +10,7 @@
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active" data-bs-interval="10000">
@@ -54,8 +54,19 @@
 
     <div class="mt-5">
 
-        <button class="btn {{ ($ad->condition == 0) ? 'btn-primary' : 'btn-danger' }} }} mb-3">{{ ($ad->condition == 0) ? "Tersedia" : "Tersewa" }}</button>
-        <button class="btn btn-dark }} mb-3">{{ $ad->categories->cateogory }}</button>
+        <div class="mb-5">
+            <button class="btn {{ ($ad->condition == 0) ? 'btn-primary' : 'btn-danger' }} }}">{{ ($ad->condition == 0) ? "Tersedia" : "Tersewa" }}</button>
+            <button class="btn btn-dark }}">{{ $ad->categories->cateogory }}</button>
+            @if($ad->status == 0)
+            <button class="btn btn-danger">Belum Diverifikasi</button>
+            @endif
+        </div>
+
+        @if($ad->status == 0)
+        <div class="mb-5">
+            <h3 class="text-danger"><b>Iklan ini belum diverifikasi oleh admin, pengguna tidak bisa melakukan transaksi dengan iklan ini untuk sementara waktu</b></h3>
+        </div>
+        @endif
 
         <h1><b>{{ $ad->title }}</b></h1>
         <p>{{ $ad->desc }}</p>
@@ -71,18 +82,18 @@
             <div class="col-md-6">
                 <h5>Fasilitas</h5>
                 <ul class="list-group mt-3 mb-3">
-                    <li class="list-group-item"><b>Irigasi</b> {{ $ad->irigation }}</li>
-                    <li class="list-group-item"><b>Jenis Tanah</b> {{ $ad->land }}</li>
-                    <li class="list-group-item"><b>Akses Jalan</b> {{ $ad->road }}</li>
-                    <li class="list-group-item"><b>Pemandangan</b> {{ $ad->view }}</li>
+                    <li class="list-group-item"><b>Irigasi</b> {{ ($ad->is_irigation == 1) ? ($ad->irigation ?? "Penjelas belum ada") : "Tidak ada irigasi" }}</li>
+                    <li class="list-group-item"><b>Jenis Tanah</b> {{ $facility->land ?? "Tidak ada data" }}</li>
+                    <li class="list-group-item"><b>Akses Jalan</b> {{ $facility->road ?? "Tidak ada data" }}</li>
+                    <li class="list-group-item"><b>Pemandangan</b> {{ $facility->view ?? "Tidak ada data" }}</li>
                 </ul>
             </div>
             <div class="col-md-6">
                 <h5>Tambahan</h5>
                 <ul class="list-group mt-3 mb-3">
-                    <li class="list-group-item"><b>Jarak Sumber Air</b> {{ $ad->irigation }}</li>
-                    <li class="list-group-item"><b>Suhu</b> {{ $ad->land }}</li>
-                    <li class="list-group-item"><b>Ketinggian</b> {{ $ad->height }}</li>
+                    <li class="list-group-item"><b>Jarak Sumber Air</b> {{ $facility->range ?? "Tidak ada data" }}</li>
+                    <li class="list-group-item"><b>Suhu</b> {{ $facility->temperature ?? "Tidak ada data" }}</li>
+                    <li class="list-group-item"><b>Ketinggian</b> {{ $facility->height ?? "Tidak ada data" }}</li>
                 </ul>
             </div>
             <div class="col-md-4"></div>
@@ -123,6 +134,7 @@
                     </form>
 
                 </div>
+                @if($ad->condition == 0)
                 <div class="col-md-2">
                     <form action="{{ route('ads.update.booking', $ad->id) }}" method="post">
                         @csrf
@@ -136,6 +148,7 @@
                 <div class="col-md-2">
                     <a href="{{ route('rent', $ad->id) }}" class="btn btn-primary">Sewa Lahan</a>
                 </div>
+                @endif
             </div>
         </div>
         @endif
@@ -148,6 +161,7 @@
                         <button class="btn {{ ($wishlist == null) ? 'btn-light' : 'btn-danger' }} mb-3">{{ ($wishlist == null) ? 'Tambahkan Wishlist' : 'Hapus dari Wishlist' }}</button>
                     </form>
                 </div>
+                @if($ad->condition == 0)
                 <div class="col-md-2">
                     <form action="{{ route('ads.update.booking', $ad->id) }}" method="post">
                         @csrf
@@ -161,103 +175,9 @@
                 <div class="col-md-2">
                     <a href="{{ route('rent', $ad->id) }}" class="btn btn-primary">Sewa Lahan</a>
                 </div>
+                @endif
             </div>
         </div>
-        @endif
-        @if(Auth::guard('web')->check())
-        @if(Auth::guard('web')->user()->id == $ad->id_user)
-        <div class="mt-5">
-            <div>
-                @php
-                $books = App\Models\Booking::where('id_lahan', $ad->id)->get();
-                @endphp
-                <h3>Daftar Pembooking</h3>
-                <table class="table mt-3">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>Email</th>
-                            <th>Telepon</th>
-                            <th>Tanggal Survey</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>Email</th>
-                            <th>Telepon</th>
-                            <th>Tanggal Survey</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        @php $no = 1 @endphp
-                        @foreach($books as $book)
-                        <tr>
-                            <td style="width:5%;">{{ $no++ }}</td>
-                            <td>{{ $book->user->fname . ' ' . $book->user->lname }}</td>
-                            <td>{{ $book->user->address }}</td>
-                            <td>{{ $book->user->email }}</td>
-                            <td>{{ $book->user->phone }}</td>
-                            <td>{{ App\Models\Booking::where(['id_lahan' => $ad->id, 'id_user' => $book->user->id])->first()->survey_date ?? "Tidak ada survey" }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="mt-5">
-                @php
-                $books = App\Models\Rents::where('id_lahan', $ad->id)->get();
-                @endphp
-                <h3>Daftar Penyewa</h3>
-                <table class="table mt-3">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>Email</th>
-                            <th>Telepon</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>Email</th>
-                            <th>Telepon</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        @php $no = 1 @endphp
-                        @foreach($books as $book)
-                        <tr>
-                            <td style="width:5%;">{{ $no++ }}</td>
-                            <td>{{ $book->user->fname . ' ' . $book->user->lname }}</td>
-                            <td>{{ $book->user->address }}</td>
-                            <td>{{ $book->user->email }}</td>
-                            <td>{{ $book->user->phone }}</td>
-                            <td>{{ $book->status == 0 ? "Belum Disetujui" : "Disetujui" }}</td>
-                            <td>
-                                <a class="btn btn-sm btn-primary" href="{{ route('rent.show.fromAds', $book->id) }}"><i class="fas fa-pencil"></i></a>
-                                <!-- Riwayat Cicilan -->
-                                <a class="btn btn-sm btn-warning" href="{{ route('rent.show.fromAds', $book->id) }}"><i class="fas fa-eye"></i></a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        @endif
         @endif
     </div>
 </div>

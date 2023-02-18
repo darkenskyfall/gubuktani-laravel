@@ -53,6 +53,10 @@ Route::get('/bantuan', function () {
 Route::get('/kontak',[FeedbackControler::class, 'contact'])->name('contact');
 Route::post('/kontak',[FeedbackControler::class, 'store'])->name('contact.store');
 
+Route::get('/tentang', function () {
+    return view('ui.about');
+})->name('about');
+
 Route::prefix('ads')->group(function () {
     Route::get('/cari',[AdsController::class, 'search'])->name('ads.search');    
     Route::get('/list',[AdsController::class, 'index'])->name('ads');    

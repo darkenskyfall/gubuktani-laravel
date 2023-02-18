@@ -19,5 +19,10 @@ class Booking extends Model
     {
         return $this->belongsTo(Customers::class, 'id_user');
     }
+
+    public function ads()
+    {
+        return $this->belongsTo(Ads::class, 'id_lahan');
+    }
     
 }

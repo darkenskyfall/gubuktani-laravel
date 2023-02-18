@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ads;
+use App\Models\Facilities;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -49,7 +50,8 @@ class AdsAdminController extends Controller
     public function show($id)
     {
         $ad = Ads::find($id);
-        return view('adm.ads.detail', ['ad' => $ad]);
+        $facility = Facilities::firstWhere('id_ads', $id);
+        return view('adm.ads.detail', ['ad' => $ad, 'facility' => $facility]);
     }
 
     /**

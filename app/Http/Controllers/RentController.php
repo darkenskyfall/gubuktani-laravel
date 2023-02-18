@@ -24,12 +24,12 @@ class RentController extends Controller
 
     public function form($id)
     {
-        if(!(Auth::guard('web')->check())){
+        if (!(Auth::guard('web')->check())) {
             return redirect('login');
         }
         $user = Auth::guard('web')->user();
         $book = Booking::firstWhere(['id_lahan' => $id, 'id_user' => $user->id]);
-        if ($book == null){
+        if ($book == null) {
             return redirect()->route('ads.show', $id)->with('error', 'Anda harus booking terlebih dahulu');
         }
         $ad = Ads::find($id);
@@ -62,7 +62,7 @@ class RentController extends Controller
             'agreement_photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $agreement = time().'.'.$request->agreement_photo->extension();  
+        $agreement = time() . '.' . $request->agreement_photo->extension();
         $request->agreement_photo->move(public_path('agreement'), $agreement);
 
         $data = new Rents([
@@ -79,6 +79,20 @@ class RentController extends Controller
 
         $data->save();
 
+        $totalMonth = ($request->period * 12);
+
+        for ($i = 1; $i <= $totalMonth; $i++) {
+            $install = new Instalments([
+                'id_user' => Auth::guard('web')->user()->id,
+                'id_lahan' => $request->id_lahan,
+                'id_rent' => $data->id,
+                'month' => Carbon::now()->addMonths($i)->format('F') . " " . Carbon::now()->addMonths($i)->format('Y'),
+                'amount' => ($request->done_price / $totalMonth),
+                'status' => 0,
+            ]);
+            $install->save();
+        }
+
         return redirect()->route('ads')->with('success', 'Proses sewa berhasil dikirim, silahkan tunggu persetujuan dari pemilik lahan');
     }
 
@@ -93,81 +107,44 @@ class RentController extends Controller
         $ad = Ads::find($id);
         $user = Auth::guard('web')->user();
         $rent = Rents::firstWhere(['id_lahan' => $ad->id, 'id_user' => $user->id]);
-        if ($rent->method == 0){
-            $instalment = Instalments::where('id_rent', $rent->id)->whereMonth('created_at', '=', Carbon::now()->month)->first();
-            $instalList = Instalments::where('id_rent', $rent->id)->get();
-            $total = $instalList->sum('amount');
-            $current = ($rent->done_price - $total);
-            if ($current <= $total){
-                $rent->status_instalment = 1;
-                $rent->save();
-                return view('ui.rentDetail', ['ad' => $ad, 'rent' => $rent, 'instalments' => $instalList]);
-            }
-            if ($instalment == null){
-                $data = new Instalments([
-                    'id_user' => $rent->id_user,
-                    'id_lahan' => $ad->id,
-                    'id_rent' => $rent->id,
-                    'month' => Carbon::now()->format('F') . " " . Carbon::now()->format('Y'),
-                    'amount' => ($rent->done_price / (12*$rent->period)),
-                    'status' => 0,
-                ]);
-                $data->save();
-            }
-        }
-        return view('ui.rentDetail', ['ad' => $ad, 'rent' => $rent, 'instalments' => $instalList]);
+        $installments = Instalments::where('id_rent', $rent->id)->get();
+
+        return view('ui.rentDetail', ['ad' => $ad, 'rent' => $rent, 'instalments' => $installments]);
     }
 
-    public function showFromAdsDetail($id){
+    public function showFromAdsDetail($id)
+    {
         $rent = Rents::find($id);
         $ad = Ads::find($rent->id_lahan);
-        if ($rent->method == 0){
-            $instalment = Instalments::where('id_rent', $rent->id)->whereMonth('created_at', '=', Carbon::now()->month)->first();
-            $instalList = Instalments::where('id_rent', $rent->id)->get();
-            $total = $instalList->sum('amount');
-            $current = ($rent->done_price - $total);
-            if ($current <= $total){
-                $rent->status_instalment = 1;
-                $rent->save();
-                return view('ui.rentDetail', ['ad' => $ad, 'rent' => $rent, 'instalments' => $instalList]);
-            }
-            if ($instalment == null){
-                $data = new Instalments([
-                    'id_user' => $rent->id_user,
-                    'id_lahan' => $ad->id,
-                    'id_rent' => $rent->id,
-                    'month' => Carbon::now()->format('F') . " " . Carbon::now()->format('Y'),
-                    'amount' => ($rent->done_price / (12*$rent->period)),
-                    'status' => 0,
-                ]);
-                $data->save();
-            }
-        }
+        
         $instalList = Instalments::where('id_rent', $rent->id)->get();
         return view('ui.rentDetail', ['ad' => $ad, 'rent' => $rent, 'instalments' => $instalList]);
     }
 
-    public function showUploadForm($id){
+    public function showUploadForm($id)
+    {
         $instalment = Instalments::find($id);
-        if ($instalment->proof_of_payment != null){
+        if ($instalment->proof_of_payment != null) {
             return redirect()->back();
         }
         return view('ui.rentUpload', ['instalment' => $instalment]);
     }
 
-    public function uploadProofOfPayment(Request $request, $id){
+    public function uploadProofOfPayment(Request $request, $id)
+    {
         $instalment = Instalments::find($id);
         $request->validate([
             'proof_of_payment' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        $img = time().'.'.$request->proof_of_payment->extension();  
+        $img = time() . '.' . $request->proof_of_payment->extension();
         $request->proof_of_payment->move(public_path('ProofOfPayments'), $img);
         $instalment->proof_of_payment = $img;
         $instalment->save();
         return redirect()->route('rent.show.fromAds', $instalment->id_rent)->with('success', 'Bukti bayar berhasil diunggah');
     }
 
-    public function approveProofOfPayment($id){
+    public function approveProofOfPayment($id)
+    {
         $instalment = Instalments::find($id);
         $instalment->status = 1;
         $instalment->save();

@@ -26,29 +26,34 @@
             @if(session('success'))
             <p class="alert alert-success mt-3">{{ session('success') }}</p>
             @endif
-            @if($errors->any())
-            @foreach($errors->all() as $err)
-            <p class="alert alert-danger mt-3">{{ $err }}</p>
-            @endforeach
-            @endif
             <form class="mt-3" action="{{ route('admin.store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Nama</label>
-                    <input type="text" name="name" value="{{ $admin->name }}" class="form-control" required>
+                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $admin->name) }}">
+                    @error('name')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email</label>
-                    <input type="email" name="email" value="{{ $admin->email }}" class="form-control" required>
+                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $admin->email) }}">
+                    @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control">
+                    <input type="password" name="password" class="form-control" value="{{ old('password') }}">
                     <small>Lewati jika tidak mengganti password</small>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Konfirmasi Password</label>
-                    <input type="password" name="password_confirm" class="form-control">
+                    <input type="password" name="password_confirm" class="form-control" value="{{ old('password') }}">
                     <small>Lewati jika tidak mengganti password</small>
                 </div>
                 <button type="submit" class="btn btn-primary">Edit</button>

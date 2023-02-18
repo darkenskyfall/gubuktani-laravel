@@ -86,9 +86,9 @@
             <h4>Total Rincian Saat Ini Rp {{ number_format($total) }}</h4>
             <h5>Sisa Cicilan Rp {{ number_format($current) }}</h5>
             @if($rent->status_instalment == 0)
-            <button class="btn btn-sm btn-danger mt-3">Belum Lunas</button>
+            <button class="btn btn-sm btn-danger mt-3" disabled>Belum Lunas</button>
             @else
-            <button class="btn btn-sm btn-success mt-3">Lunas</button>
+            <button class="btn btn-sm btn-success mt-3" disabled>Lunas</button>
             @endif
         </div>
     </div>
@@ -130,9 +130,11 @@
                     <td>{{ $instalment->status == 0 ? "Belum Disetujui" : "Disetujui" }}</td>
                     <td>
                         @if(Auth::guard('web')->user()->id != $ad->id_user)
-                        @if($instalment->proof_of_payment == null)
-                        <a href="{{ route('rent.upload', $instalment->id) }}" class="btn btn-sm btn-primary">Unggah Bukti Bayar</a>
-                        @endif
+                            @if($instalment->proof_of_payment == null)
+                                @if(Carbon\Carbon::parse($instalment->month)->timestamp < Carbon\Carbon::now()->addMonth(5)->timestamp)
+                                <a href="{{ route('rent.upload', $instalment->id) }}" class="btn btn-sm btn-primary">Unggah Bukti Bayar</a>
+                                @endif
+                            @endif
                         @else
                         @if($instalment->proof_of_payment != null && $instalment->status == 0)
                         <form action="{{ route('rent.approvement', $instalment->id) }}" method="post">

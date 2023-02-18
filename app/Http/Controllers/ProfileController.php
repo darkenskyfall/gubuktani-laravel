@@ -48,7 +48,36 @@ class ProfileController extends Controller
 
         $rAds = Ads::find($rIDS);
 
-        return view('ui.profile', ['customer' => $customer, 'ads' => $ownAds, 'wishlists' => $wAds, 'bookings' => $bAds, 'rents' => $rAds]);
+        $booksIDs = [];
+        foreach ($ownAds as $key => $value) {
+            array_push($booksIDs, $value->id);
+        }
+
+        $books = Booking::where('id_lahan', $booksIDs)->get();
+
+        $booksIDs = [];
+        foreach ($ownAds as $key => $value) {
+            array_push($booksIDs, $value->id);
+        }
+
+        $books = Booking::where('id_lahan', $booksIDs)->get();
+
+        $rentsIDs = [];
+        foreach ($ownAds as $key => $value) {
+            array_push($rentsIDs, $value->id);
+        }
+
+        $rents = Rents::where('id_lahan', $rentsIDs)->get();
+
+        return view('ui.profile', [
+            'customer' => $customer, 
+            'ads' => $ownAds, 
+            'wishlists' => $wAds, 
+            'bookings' => $bAds, 
+            'rents' => $rAds,
+            'books' => $books,
+            'ownRents' => $rents,
+        ]);
     }
 
     /**

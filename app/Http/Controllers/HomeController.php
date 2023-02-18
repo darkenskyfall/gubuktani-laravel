@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $ads = Ads::where('status', '=', 1)->get();
+        $ads = Ads::get();
         $cats = Categories::get();
         return view('ui.home', ['ads' => $ads, 'cats' => $cats]);
     }

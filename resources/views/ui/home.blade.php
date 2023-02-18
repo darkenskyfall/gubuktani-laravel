@@ -56,6 +56,9 @@
                         <li>Luas {{ $ad->large }}</li>
                         <li>Rp. {{ number_format($ad->price) }} / {{ $ad->period }}</li>
                     </ul>
+                    @if($ad->status == 0)
+                        <a href="#" class="btn btn-sm btn-danger">Belum Diverifikasi</a>
+                    @endif
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div class="btn-group">
                             <a href="{{ url('/ads/detail/' . $ad->id) }}" class="btn btn-sm btn-outline-secondary">Lihat Selengkapnya</a>

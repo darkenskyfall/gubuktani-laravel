@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ads;
 use App\Models\Wishlists;
 use App\Models\Booking;
+use App\Models\Facilities;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class AdsController extends Controller
      */
     public function index()
     {
-        $ads = Ads::where('status', '=', 1)->get();
+        $ads = Ads::get();
         $search = "";
         return view('ui.list', ['ads' => $ads, 'search' => $search]);
     }
@@ -59,37 +60,37 @@ class AdsController extends Controller
     {
         $request->validate([
             'id_category' => 'required',
-            'title' => 'required',
-            'address' => 'required',
-            'large' => 'required',
-            'certification' => 'required',
-            'desc' => 'required',
-            'price' => 'required',
-            'period' => 'required',
-            // 'irigation' => 'required',
-            // 'land' => 'required',
-            // 'road' => 'required',
-            // 'view' => 'required',
-            // 'range' => 'required',
-            // 'temperature' => 'required',
-            // 'height' => 'required',
-            // 'notice' => 'required',
+            'title' => 'required|max:60',
+            'address' => 'required|max:60',
+            'large' => 'required|max:60',
+            'certification' => 'required|max:60',
+            'desc' => 'required|max:255',
+            'price' => 'required|max:60',
+            'period' => 'required|max:60',
+            'irigation' => 'max:60',
+            'land' => 'max:60',
+            'road' => 'max:60',
+            'view' => 'max:60',
+            'range' => 'max:60',
+            'temperature' => 'max:60',
+            'height' => 'max:60',
+            'notice' => 'max:255',
             'picture_one' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'picture_two' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'picture_three' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'picture_four' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $picture_one = time().'.'.$request->picture_one->extension();  
+        $picture_one = time().'-one.'.$request->picture_one->extension();  
         $request->picture_one->move(public_path('ads'), $picture_one);
 
-        $picture_two = time().'.'.$request->picture_two->extension();  
+        $picture_two = time().'-two.'.$request->picture_two->extension();  
         $request->picture_two->move(public_path('ads'), $picture_two);
 
-        $picture_three = time().'.'.$request->picture_three->extension();  
+        $picture_three = time().'-three.'.$request->picture_three->extension();  
         $request->picture_three->move(public_path('ads'), $picture_three);
 
-        $picture_four = time().'.'.$request->picture_four->extension();  
+        $picture_four = time().'-four.'.$request->picture_four->extension();  
         $request->picture_four->move(public_path('ads'), $picture_four);
 
         $user = new Ads([
@@ -104,13 +105,14 @@ class AdsController extends Controller
             'period' => $request->period,
             'status' => 0, // 0 belum terverifikasi, 1 terverifikasi
             'condition' => 0, // 0 tersedia, 1 tersewa
+            'is_irigation' => $request->is_irigation,
             'irigation' => $request->irigation,
-            'land' => $request->land,
-            'road' => $request->road,
-            'view' => $request->view,
-            'range' => $request->range,
-            'temperature' => $request->temperature,
-            'height' => $request->height,
+            // 'land' => $request->land,
+            // 'road' => $request->road,
+            // 'view' => $request->view,
+            // 'range' => $request->range,
+            // 'temperature' => $request->temperature,
+            // 'height' => $request->height,
             'notice' => $request->notice,
             'picture_one' => $picture_one,
             'picture_two' => $picture_two,
@@ -119,6 +121,18 @@ class AdsController extends Controller
         ]);
 
         $user->save();
+
+        $facilites = new Facilities([
+            'id_ads' => $user->id,
+            'land' => $request->land,
+            'road' => $request->road,
+            'view' => $request->view,
+            'range' => $request->range,
+            'temperature' => $request->temperature,
+            'height' => $request->height,
+        ]);
+
+        $facilites->save();
 
         return redirect()->route('ads')->with('success', 'Iklan anda berhasil dibuat!, sedang menunggu verifikasi dari admin');
     }
@@ -140,7 +154,14 @@ class AdsController extends Controller
             $wishlist = DB::table('wishlists')->where(['id_lahan' => $ad->id, 'id_user' => Auth::guard('web')->user()->id])->first();
             $booking = DB::table('bookings')->where(['id_lahan' => $ad->id, 'id_user' => Auth::guard('web')->user()->id])->first();
         }
-        return view('ui.detail', ['ad' => $ad, 'user' => $user, 'wishlist' => $wishlist, 'booking' => $booking]);
+        $facility = Facilities::firstWhere('id_ads', $id);
+        return view('ui.detail', [
+            'ad' => $ad, 
+            'user' => $user, 
+            'wishlist' => $wishlist, 
+            'booking' => $booking, 
+            'facility' => $facility
+        ]);
     }
 
     public function updateWishlist(Request $request, $id)
@@ -222,7 +243,12 @@ class AdsController extends Controller
             return redirect()->back();
         }
         $cats = DB::table('categories')->get();
-        return view('ui.adsEdit', ['ad' => $ad, 'cats' => $cats]);
+        $facility = Facilities::firstWhere('id_ads', $id);
+        return view('ui.adsEdit', [
+            'ad' => $ad, 
+            'cats' => $cats,
+            'facility' => $facility
+        ]);
     }
 
     /**
@@ -236,21 +262,21 @@ class AdsController extends Controller
     {
         $request->validate([
             'id_category' => 'required',
-            'title' => 'required',
-            'address' => 'required',
-            'large' => 'required',
-            'certification' => 'required',
-            'desc' => 'required',
-            'price' => 'required',
-            'period' => 'required',
-            // 'irigation' => 'required',
-            // 'land' => 'required',
-            // 'road' => 'required',
-            // 'view' => 'required',
-            // 'range' => 'required',
-            // 'temperature' => 'required',
-            // 'height' => 'required',
-            // 'notice' => 'required',
+            'title' => 'required|max:60',
+            'address' => 'required|max:60',
+            'large' => 'required|max:60',
+            'certification' => 'required|max:60',
+            'desc' => 'required|max:255',
+            'price' => 'required|max:60',
+            'period' => 'required|max:60',
+            'irigation' => 'max:60',
+            'land' => 'max:60',
+            'road' => 'max:60',
+            'view' => 'max:60',
+            'range' => 'max:60',
+            'temperature' => 'max:60',
+            'height' => 'max:60',
+            'notice' => 'max:255',
         ]);
 
         $data = Ads::find($id);
@@ -262,40 +288,50 @@ class AdsController extends Controller
         $data->desc = $request->desc;
         $data->price = $request->price;
         $data->period = $request->period;
-        $data->irigation = $request->irigation;
-        $data->land = $request->land;
-        $data->road = $request->road;
-        $data->view = $request->view;
-        $data->range = $request->range;
-        $data->temperature = $request->temperature;
-        $data->height = $request->height;
         $data->notice = $request->notice;
+        $data->is_irigation = $request->is_irigation;
+        if ($request->is_irigation == 1){
+            $data->irigation = $request->irigation;
+        }else{
+            $data->irigation = NULL;
+        }
 
         if ($image = $request->file('picture_one')) {
-            $imageName = time().'.'.$request->picture_one->extension();  
-            $request->picture_one->move(public_path('profiles'), $imageName);
+            $imageName = time().'-one.'.$request->picture_one->extension();  
+            $request->picture_one->move(public_path('ads'), $imageName);
             $data->picture_one = "$imageName";
         }
 
         if ($image = $request->file('picture_two')) {
-            $imageName = time().'.'.$request->picture_two->extension();  
-            $request->picture_two->move(public_path('profiles'), $imageName);
+            $imageName = time().'-two.'.$request->picture_two->extension();  
+            $request->picture_two->move(public_path('ads'), $imageName);
             $data->picture_two = "$imageName";
         }
 
         if ($image = $request->file('picture_three')) {
-            $imageName = time().'.'.$request->picture_three->extension();  
-            $request->picture_three->move(public_path('profiles'), $imageName);
+            $imageName = time().'-three.'.$request->picture_three->extension();  
+            $request->picture_three->move(public_path('ads'), $imageName);
             $data->picture_three = "$imageName";
         }
 
         if ($image = $request->file('picture_four')) {
-            $imageName = time().'.'.$request->picture_four->extension();  
-            $request->picture_four->move(public_path('profiles'), $imageName);
+            $imageName = time().'-four.'.$request->picture_four->extension();  
+            $request->picture_four->move(public_path('ads'), $imageName);
             $data->picture_four = "$imageName";
         }
 
         $data->save();
+
+        $facility = Facilities::firstWhere('id_ads', $id);
+        $facility->land = $request->land;
+        $facility->road = $request->road;
+        $facility->view = $request->view;
+        $facility->range = $request->range;
+        $facility->temperature = $request->temperature;
+        $facility->height = $request->height;
+
+        $facility->save();
+
 
         return redirect()->route('profile')->with('success', 'Iklan anda berhasil diperbarui!');
     }

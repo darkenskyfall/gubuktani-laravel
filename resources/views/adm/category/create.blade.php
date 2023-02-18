@@ -26,16 +26,16 @@
             @if(session('success'))
             <p class="alert alert-success mt-3">{{ session('success') }}</p>
             @endif
-            @if($errors->any())
-            @foreach($errors->all() as $err)
-            <p class="alert alert-danger mt-3">{{ $err }}</p>
-            @endforeach
-            @endif
             <form class="mt-3" action="{{ route('category.store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Kategori</label>
-                    <input type="text" name="cateogory" class="form-control" required>
+                    <input type="text" name="cateogory" class="form-control @error('cateogory') is-invalid @enderror " value="{{ old('cateogory') }}" >
+                    @error('cateogory')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Tambah</button>
             </form>

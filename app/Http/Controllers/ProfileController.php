@@ -53,21 +53,14 @@ class ProfileController extends Controller
             array_push($booksIDs, $value->id);
         }
 
-        $books = Booking::where('id_lahan', $booksIDs)->get();
-
-        $booksIDs = [];
-        foreach ($ownAds as $key => $value) {
-            array_push($booksIDs, $value->id);
-        }
-
-        $books = Booking::where('id_lahan', $booksIDs)->get();
+        $books = Booking::whereIn('id_lahan', $booksIDs)->get();
 
         $rentsIDs = [];
         foreach ($ownAds as $key => $value) {
             array_push($rentsIDs, $value->id);
         }
 
-        $rents = Rents::where('id_lahan', $rentsIDs)->get();
+        $rents = Rents::whereIn('id_lahan', $rentsIDs)->get();
 
         return view('ui.profile', [
             'customer' => $customer, 

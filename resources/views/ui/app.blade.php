@@ -182,6 +182,15 @@
     <script src="{{ URL::asset('assets/demo/chart-bar-demo.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="{{ URL::asset('js/datatables-simple-demo.js') }}"></script>
+    <script>
+        function confirmDelete() {
+            var result = confirm("Are you sure you want to delete this item?");
+            console.log(result);
+            if (result === true) {
+                document.getElementById("delete-form").submit();
+            }
+        }
+    </script>
 </body>
 
 </html>

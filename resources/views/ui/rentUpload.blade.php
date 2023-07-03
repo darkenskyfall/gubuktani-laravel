@@ -14,7 +14,7 @@
         <h5 class="card-header">Rincian Cicilan</h5>
         <div class="card-body">
             <h5 class="card-title">{{ $instalment->month }}</h5>
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis unde iure debitis officiis similique in deserunt. Ex nobis doloremque est cupiditate itaque ab, neque voluptatum natus odio. Consequatur, ut perferendis!</p>
+          
             <h4>Jumlah Bayar Rp {{ number_format($instalment->amount, 0) }}</h4>
         </div>
     </div>

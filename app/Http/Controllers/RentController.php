@@ -65,10 +65,12 @@ class RentController extends Controller
         $agreement = time() . '.' . $request->agreement_photo->extension();
         $request->agreement_photo->move(public_path('agreement'), $agreement);
 
+        $fix_price = $request->done_price * $request->period; 
+
         $data = new Rents([
             'id_user' => Auth::guard('web')->user()->id,
             'id_lahan' => $request->id_lahan,
-            'done_price' => $request->done_price,
+            'done_price' => $fix_price,
             'period' => $request->period,
             'period_type' => $request->period_type,
             'method' => $request->method,
@@ -87,7 +89,7 @@ class RentController extends Controller
                 'id_lahan' => $request->id_lahan,
                 'id_rent' => $data->id,
                 'month' => Carbon::now()->addMonths($i)->format('F') . " " . Carbon::now()->addMonths($i)->format('Y'),
-                'amount' => ($request->done_price / $totalMonth),
+                'amount' => ($fix_price / $totalMonth),
                 'status' => 0,
             ]);
             $install->save();

@@ -3,7 +3,7 @@
 @section('title', 'Ganti Password')
 
 @section('content')
-<div class="container mb-5">
+<div class="container mb-5 w-50 mx-auto">
     <h1 style="margin-top:100px;">Ganti Password</h1>
     @if(session('success'))
     <p class="alert alert-success mt-3">{{ session('success') }}</p>

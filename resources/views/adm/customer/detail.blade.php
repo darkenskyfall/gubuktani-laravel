@@ -16,9 +16,7 @@ use Carbon\Carbon;
     </ol>
     <div class="card mb-4 mt-4">
         <div class="card-body">
-            DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-            <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-            .
+       
         </div>
     </div>
     @if(session('success'))
@@ -70,13 +68,13 @@ use Carbon\Carbon;
                     <div class="col-md-3">
                         <b>Foto Profil</b>
                         <div class="mt-3">
-                            <img src="{{ asset('profiles/' . $customer->profile_picture) }}" alt="{{ $customer->fname }}" class="img-thumbnail fit-image-profile me-2"">
+                            <img src="{{ URL::asset('profiles/' . $customer->profile_picture) }}" alt="{{ $customer->fname }}" class="img-thumbnail fit-image-profile me-2"">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <b>Foto KTP</b>
                         <div class="mt-3">
-                            <img src="{{ asset('profiles/' . $customer->ktp_picture) }}" alt="{{ $customer->fname }}" class="img-thumbnail fit-image-profile me-2"">
+                            <img src="{{ URL::asset('ktps/' . $customer->ktp_picture) }}" alt="{{ $customer->fname }}" class="img-thumbnail fit-image-profile me-2"">
                         </div>
                     </div>
                 </div>

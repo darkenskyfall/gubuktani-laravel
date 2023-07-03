@@ -19,7 +19,7 @@ class AdsController extends Controller
      */
     public function index()
     {
-        $ads = Ads::get();
+        $ads = Ads::get()->reverse();
         $search = "";
         return view('ui.list', ['ads' => $ads, 'search' => $search]);
     }
@@ -46,6 +46,10 @@ class AdsController extends Controller
         if (!(Auth::guard('web')->check())){
             return redirect()->route('login');
         }
+        if (Auth::guard('web')->user()->ktp_verified_at == NULL){
+            return redirect()->route('home')->with('error', "Anda tidak bisa mengakses halaman ini karena akun anda sedang ditinjau");
+        }
+
         $cats = DB::table('categories')->get();
         return view('ui.add', ['cats' => $cats]);
     }
@@ -93,6 +97,8 @@ class AdsController extends Controller
         $picture_four = time().'-four.'.$request->picture_four->extension();  
         $request->picture_four->move(public_path('ads'), $picture_four);
 
+        $price = (int) str_replace(',', '', $request->price);
+
         $user = new Ads([
             'id_user' => Auth::guard('web')->user()->id,
             'id_category' => $request->id_category,
@@ -101,7 +107,7 @@ class AdsController extends Controller
             'large' => $request->large,
             'certification' => $request->certification,
             'desc' => $request->desc,
-            'price' => $request->price,
+            'price' => $price,
             'period' => $request->period,
             'status' => 0, // 0 belum terverifikasi, 1 terverifikasi
             'condition' => 0, // 0 tersedia, 1 tersewa
@@ -134,7 +140,7 @@ class AdsController extends Controller
 
         $facilites->save();
 
-        return redirect()->route('ads')->with('success', 'Iklan anda berhasil dibuat!, sedang menunggu verifikasi dari admin');
+        return redirect()->route('ads')->with('success', 'Iklan anda berhasil dibuat!, untuk mendukung validasi, anda bisa mengirimkan attachment berupa surat-surat pendukung seperti sertifikat dan akta penjualan ke email support@gubuktani.com demi mempercepat validitas dari iklan');
     }
 
     /**
@@ -279,6 +285,8 @@ class AdsController extends Controller
             'notice' => 'max:255',
         ]);
 
+        $price = (int) str_replace(',', '', $request->price);
+
         $data = Ads::find($id);
         $data->id_category = $request->id_category;
         $data->title = $request->title;
@@ -286,7 +294,7 @@ class AdsController extends Controller
         $data->large = $request->large;
         $data->certification = $request->certification;
         $data->desc = $request->desc;
-        $data->price = $request->price;
+        $data->price = $price;
         $data->period = $request->period;
         $data->notice = $request->notice;
         $data->is_irigation = $request->is_irigation;

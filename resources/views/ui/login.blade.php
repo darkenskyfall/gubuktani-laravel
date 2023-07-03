@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gubuktani - @yield('title')</title>
+    <title>Gubuktani - Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="{{ URL::asset('css/styles.css') }}" rel="stylesheet" />
@@ -116,11 +116,17 @@
 
 
     <main>
-
-        <div class="container mb-5">
-            <h1 style="margin-top:100px;">Login</h1>
+        <div class="container mb-5 w-50 mx-auto">
+            <center>
+            <i class="fas fa-seedling" style="margin-top:100px; font-size:80px;"></i>
+            <h2 class="display-6">Gubuktani.co.id</h2>
+            </center>
+            <h1 style="margin-top:40px;">Login</h1>
             @if(session('success'))
             <p class="alert alert-success mt-3">{{ session('success') }}</p>
+            @endif
+            @if(session('message'))
+            <p class="alert alert-success mt-3">{{ session('message') }}</p>
             @endif
             <form class="mt-3" action="{{ route('login.authenticate') }}" method="POST">
                 @csrf

@@ -14,6 +14,8 @@ use App\Http\Controllers\InstalmentController;
 use App\Http\Controllers\LoginAdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RentController;
+use App\Http\Controllers\VerifController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,6 +58,18 @@ Route::post('/kontak',[FeedbackControler::class, 'store'])->name('contact.store'
 Route::get('/tentang', function () {
     return view('ui.about');
 })->name('about');
+
+// Auth::routes();
+// Auth::routes(['verify' => true]);
+
+Route::get('/verifikasi-email', function () {
+    return view('ui.verification');
+})->name('verify');
+
+Route::post('/verifikasi-email', [AuthController::class, 'resendEmail'])->name('resend.verification'); 
+
+// Route::get('dashboard', [AuthController::class, 'dashboard'])->middleware(['auth', 'verify_email']); 
+Route::get('akun/verifikasi/{token}', [AuthController::class, 'verifyAccount'])->name('user.verify'); 
 
 Route::prefix('ads')->group(function () {
     Route::get('/cari',[AdsController::class, 'search'])->name('ads.search');    
@@ -128,6 +142,11 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/pemilik',[CustomerController::class, 'index'])->name('customer');
     Route::get('/admin/pemilik/{id}',[CustomerController::class, 'show'])->name('customer.show'); 
     Route::post('/admin/pemilik/hapus/{id}',[CustomerController::class, 'destroy'])->name('customer.delete');
+    
+    Route::get('/admin/pemilik-baru',[VerifController::class, 'index'])->name('customer.new');
+    Route::get('/admin/pemilik-baru/{id}',[VerifController::class, 'show'])->name('customer.new.show'); 
+    Route::post('/admin/pemilik-baru/edit/{id}',[VerifController::class, 'update'])->name('customer.new.update');
+    Route::post('/admin/pemilik-baru/hapus/{id}',[VerifController::class, 'destroy'])->name('customer.new.delete');
 
     Route::get('/admin/umpan-balik',[FeedbackControler::class, 'index'])->name('feedback');
 

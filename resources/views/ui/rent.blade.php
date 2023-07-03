@@ -3,7 +3,7 @@
 @section('title', 'Sewa Lahan')
 
 @section('content')
-<div class="container mb-5">
+<div class="container mb-5 w-50 mx-auto">
     <h1 style="margin-top:100px;">Sewa Lahan</h1>
     <div class="card mt-5 mb-5">
         <h5 class="card-header">Lahan Disewa</h5>

@@ -63,13 +63,13 @@ use Carbon\Carbon;
                     <div class="col-md-3">
                         <b>Foto Profil</b>
                         <div class="mt-3">
-                            <img src="{{ asset('profiles/' . $customer->profile_picture) }}" alt="{{ $customer->fname }}" class="img-thumbnail fit-image-profile me-2"">
+                            <img src="{{ URL::asset('profiles/' . $customer->profile_picture) }}" alt="{{ $customer->fname }}" class="img-thumbnail fit-image-profile me-2"">
                         </div>
                     </div>
                     <div class=" col-md-3">
                             <b>Foto KTP</b>
                             <div class="mt-3">
-                                <img src="{{ asset('profiles/' . $customer->ktp_picture) }}" alt="{{ $customer->fname }}" class="img-thumbnail fit-image-profile me-2"">
+                                <img src="{{ URL::asset('ktps/' . $customer->ktp_picture) }}" alt="{{ $customer->fname }}" class="img-thumbnail fit-image-profile me-2"">
                         </div>
                     </div>
                 </div>
@@ -123,12 +123,12 @@ use Carbon\Carbon;
                                                 <td>{{ $wishlist->title }}</td>
                                                 <td>{{ $wishlist->address }}</td>
                                                 <td>{{ $wishlist->categories->cateogory }}</td>
-                                                <td><button class="btn btn-sm {{ ($wishlist->first()->condition == 1) ? 'btn-danger' : 'btn-primary' }} disabled">{{ ($wishlist->first()->condition == 1) ? "Tersewa" : "Tersedia" }}</button></td>
+                                                <td><button class="btn btn-sm {{ ($wishlist->condition == 1) ? 'btn-danger' : 'btn-primary' }} disabled">{{ ($wishlist->condition == 1) ? "Tersewa" : "Tersedia" }}</button></td>
                                                 <td style="width:15%;">
                                                     <form action="{{ route('profile.update.wishlist', $wishlist->id) }}" method="post">
                                                         @csrf
-                                                        <a class="btn btn-sm btn-warning" href="{{ route('ads.show', $wishlist->first()->id) }}"><i class="fas fa-eye"></i></a>
-                                                        <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                                        <a class="btn btn-sm btn-warning" href="{{ route('ads.show', $wishlist->id) }}"><i class="fas fa-eye"></i></a>
+                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apa anda yakin ingin menghapusnya ?')"><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -164,7 +164,7 @@ use Carbon\Carbon;
                                                     <form action="{{ route('profile.update.booking', $booking->id) }}" method="post">
                                                         @csrf
                                                         <a class="btn btn-sm btn-warning" href="{{ route('ads.show', $booking->id) }}"><i class="fas fa-eye"></i></a>
-                                                        <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apa anda yakin ingin menghapusnya ?')"><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -229,7 +229,7 @@ use Carbon\Carbon;
                                                         @csrf
                                                         <a class="btn btn-sm btn-primary" href="{{ route('ads.edit', $ad->id) }}"><i class="fas fa-pencil"></i></a>
                                                         <a class="btn btn-sm btn-warning" href="{{ route('ads.show', $ad->id) }}"><i class="fas fa-eye"></i></a>
-                                                        <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apa anda yakin ingin menghapusnya ?')"><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>

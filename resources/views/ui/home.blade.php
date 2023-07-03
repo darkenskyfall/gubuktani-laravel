@@ -5,6 +5,11 @@
 @section('content')
 <div class="album py-5">
     <div class="container">
+
+        @if(session('error'))
+        <p class="alert alert-danger mt-3">{{ session('error') }}</p>
+        @endif
+
         <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -43,17 +48,16 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-
-
+        
         <div class="row row-cols-1 mt-5 row-cols-sm-2 row-cols-md-3 g-3">
         @foreach($ads as $ad) <div class="col">
             <div class="card shadow-sm">
-                <img src="{{ asset('ads/' . $ad->picture_one) }}" class="card-img-top" alt="{{ $ad->title }}">
+                <img src="{{ URL::asset('ads/' . $ad->picture_one) }}" class="card-img-top" alt="{{ $ad->title }}">
                 <div class="card-body">
                     <h4><b>{{ $ad->title }}</b></h4>
                     <ul class="mt-3">
                         <li><b>{{ $ad->categories->cateogory }}</b></li>
-                        <li>Luas {{ $ad->large }}</li>
+                        <li>Luas {{ $ad->large }} <b>Ha</b></li>
                         <li>Rp. {{ number_format($ad->price) }} / {{ $ad->period }}</li>
                     </ul>
                     @if($ad->status == 0)
@@ -64,7 +68,7 @@
                             <a href="{{ url('/ads/detail/' . $ad->id) }}" class="btn btn-sm btn-outline-secondary">Lihat Selengkapnya</a>
                             <a href="#" class="btn btn-sm {{ ($ad->condition == 0) ? 'btn-primary' : 'btn-danger' }} }}">{{ ($ad->condition == 0) ? "Tersedia" : "Tersewa" }}</a>
                         </div>
-                        <small class="text-muted">{{ Carbon\Carbon::parse($ad->created_at)->diffForHumans() }}</small>
+                        <small class="text-muted text-right">Di unggah<br>{{ Carbon\Carbon::parse($ad->created_at)->diffForHumans() }}</small>
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@
 @section('title', 'Detail Sewa Lahan')
 
 @section('content')
-<div class="container mb-5">
+<div class="container mb-5 ">
     <h1 style="margin-top:100px;">Detil Sewa Lahan</h1>
     <div class="card mt-5 mb-5">
         <h5 class="card-header">Lahan Disewa</h5>
@@ -62,7 +62,7 @@
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Foto Perjanjian</label>
             <div>
-            <img src="{{ asset('agreement/' . $rent->agreement_photo) }}"  class="img-thumbnail fit-image-profile me-2"">
+            <img src="{{ URL::asset('agreement/' . $rent->agreement_photo) }}"  class="img-thumbnail fit-image-profile me-2"">
             </div>
         </div>
         @if(Auth::guard('web')->user()->id == $ad->id_user)
@@ -123,7 +123,7 @@
                         Belum ada bukti bayar
                         @else
                         <div class="bd-example bd-example-images">
-                            <img src="{{ asset('ProofOfPayments/' . $instalment->proof_of_payment) }}" alt="{{ $instalment->proof_of_payment }}" class="img-thumbnail fit-image-profile me-2"">
+                            <img src="{{ URL::asset('ProofOfPayments/' . $instalment->proof_of_payment) }}" alt="{{ $instalment->proof_of_payment }}" class="img-thumbnail fit-image-profile me-2"">
                         </div>
                         @endif
                     </td>
@@ -131,7 +131,7 @@
                     <td>
                         @if(Auth::guard('web')->user()->id != $ad->id_user)
                             @if($instalment->proof_of_payment == null)
-                                @if(Carbon\Carbon::parse($instalment->month)->timestamp < Carbon\Carbon::now()->addMonth(5)->timestamp)
+                                @if(Carbon\Carbon::parse($instalment->month)->timestamp < Carbon\Carbon::now()->timestamp)
                                 <a href="{{ route('rent.upload', $instalment->id) }}" class="btn btn-sm btn-primary">Unggah Bukti Bayar</a>
                                 @endif
                             @endif

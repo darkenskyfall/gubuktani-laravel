@@ -14,28 +14,28 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active" data-bs-interval="10000">
-                <img src="{{ asset('ads/' . $ad->picture_one) }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
+                <img src="{{ URL::asset('ads/' . $ad->picture_one) }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block text-white">
                     <h5>Gambar Pertama</h5>
                     <p>Some representative placeholder content for the first slide.</p>
                 </div>
             </div>
             <div class="carousel-item" data-bs-interval="2000">
-                <img src="{{ asset('ads/' . $ad->picture_two) }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
+                <img src="{{ URL::asset('ads/' . $ad->picture_two) }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block text-white">
                     <h5>Gambar Kedua</h5>
                     <p>Some representative placeholder content for the first slide.</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="{{ asset('ads/' . $ad->picture_three) }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
+                <img src="{{ URL::asset('ads/' . $ad->picture_three) }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block text-white">
                     <h5>Gambar Ketiga</h5>
                     <p>Some representative placeholder content for the first slide.</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="{{ asset('ads/' . $ad->picture_four) }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
+                <img src="{{ URL::asset('ads/' . $ad->picture_four) }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block text-white">
                     <h5>Gambar Keempat</h5>
                     <p>Some representative placeholder content for the first slide.</p>
@@ -74,8 +74,8 @@
         <h5>Alamat</h5>
         <p>{{ $ad->address }}</p>
 
-        <h5>Luas & Sertifikasi</h5>
-        <p>{{ $ad->large }} & {{ $ad->certification }}</p>
+        <h5>Luas  & Sertifikasi</h5>
+        <p>{{ $ad->large }} <b>Ha</b> & {{ $ad->certification }}</p>
 
         <div class="row">
 
@@ -91,9 +91,9 @@
             <div class="col-md-6">
                 <h5>Tambahan</h5>
                 <ul class="list-group mt-3 mb-3">
-                    <li class="list-group-item"><b>Jarak Sumber Air</b> {{ $facility->range ?? "Tidak ada data" }}</li>
-                    <li class="list-group-item"><b>Suhu</b> {{ $facility->temperature ?? "Tidak ada data" }}</li>
-                    <li class="list-group-item"><b>Ketinggian</b> {{ $facility->height ?? "Tidak ada data" }}</li>
+                    <li class="list-group-item"><b>Jarak Sumber Air </b> {{ $facility->range ?? "Tidak ada data" }}<b> Meter</b></li>
+                    <li class="list-group-item"><b>Suhu </b> {{ $facility->temperature ?? "Tidak ada data" }} <b> Celcius</b></li>
+                    <li class="list-group-item"><b>Ketinggian </b> {{ $facility->height ?? "Tidak ada data" }} <b>Mdpl</b></li>
                 </ul>
             </div>
             <div class="col-md-4"></div>
@@ -109,7 +109,7 @@
             <div class="row">
                 <div class="span4">
                     <div class="clearfix content-heading">
-                        <img style="float:left" src="{{ asset('profiles/' . $user->profile_picture) }}" alt="{{ $user->fname }}" class="img-thumbnail fit-image rounded-circle me-2">
+                        <img style="float:left" src="{{ URL::asset('profiles/' . $user->profile_picture) }}" alt="{{ $user->fname }}" class="img-thumbnail fit-image rounded-circle me-2">
                         <h3><b>{{ $user->fname . " " . $user->lname}}</b></h3>
                         <p style="font-size: 20px;"><b>{{ $user->address }}</b> • {{ $user->phone }}</p>
                     </div>
@@ -130,7 +130,7 @@
                 <div class="col-md-2">
                     <form action="{{ route('ads.update.wishlist', $ad->id) }}" method="post">
                         @csrf
-                        <button class="btn {{ ($wishlist == null) ? 'btn-light' : 'btn-danger' }} mb-3">{{ ($wishlist == null) ? 'Tambahkan Wishlist' : 'Hapus dari Wishlist' }}</button>
+                        <button class="btn {{ ($wishlist == null) ? 'btn-light' : 'btn-danger' }} mb-3" onclick="{{ ($wishlist == null) ? '' : 'return confirm("Apakah anda yakin untuk menghapus wishlist?")' }}">{{ ($wishlist == null) ? 'Tambahkan Wishlist' : 'Hapus dari Wishlist' }}</button>
                     </form>
 
                 </div>
@@ -141,7 +141,7 @@
                         @if($booking == null)
                         <a href="{{ route('ads.show.booking', $ad->id) }}" class="btn {{ ($booking == null) ? 'btn-light' : 'btn-danger' }} mb-3">{{ ($booking == null) ? 'Tambahkan Booking' : 'Hapus dari Booking' }}</a>
                         @else
-                        <button class="btn {{ ($booking == null) ? 'btn-light' : 'btn-danger' }} mb-3">{{ ($booking == null) ? 'Tambahkan Booking' : 'Hapus dari Booking' }}</button>
+                        <button class="btn {{ ($booking == null) ? 'btn-light' : 'btn-danger' }} mb-3" onclick="{{ ($booking == null) ? '' : 'return confirm("Apakah anda yakin untuk menghapus booking?")' }}">{{ ($booking == null) ? 'Tambahkan Booking' : 'Hapus dari Booking' }}</button>
                         @endif
                     </form>
                 </div>

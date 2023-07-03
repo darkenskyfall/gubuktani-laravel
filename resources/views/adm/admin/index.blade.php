@@ -12,9 +12,7 @@
     <a class="btn btn-sm btn-success" href="{{ route('admin.create') }}"><i class="fas fa-plus"></i></a>
     <div class="card mb-4 mt-4">
         <div class="card-body">
-            DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-            <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-            .
+          
         </div>
     </div>
     @if(session('success'))
@@ -55,7 +53,7 @@
                                 @if($admin->id != 1)
                                     @if(Auth::guard('admin')->user()->id == 1)
                                     <a class="btn btn-sm btn-primary" href="{{ route('admin.edit', $admin->id) }}"><i class="fas fa-pencil"></i></a>
-                                    <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    <button type="submit" class="btn btn-sm btn-danger"onclick="return confirm('Apa anda yakin ingin menghapusnya ?')"><i class="fas fa-trash"></i></button>
                                     @endif
                                     @if($admin->id != 1 && Auth::guard('admin')->user()->id == $admin->id)
                                     <a class="btn btn-sm btn-primary" href="{{ route('admin.edit', $admin->id) }}"><i class="fas fa-pencil"></i></a>

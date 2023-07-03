@@ -12,9 +12,7 @@
     <a class="btn btn-sm btn-success" href="{{ route('category.create') }}"><i class="fas fa-plus"></i></a>
     <div class="card mb-4 mt-4">
         <div class="card-body">
-            DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-            <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-            .
+          
         </div>
     </div>
     @if(session('success'))
@@ -51,7 +49,7 @@
                             <form action="{{ route('category.delete', $category->id) }}" method="post">
                                 @csrf
                                 <a class="btn btn-sm btn-primary" href="{{ route('category.edit', $category->id) }}"><i class="fas fa-pencil"></i></a>
-                                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apa anda yakin ingin menghapusnya ?')"><i class="fas fa-trash"></i></button>
                             </form>
                         </td>
                     </tr>

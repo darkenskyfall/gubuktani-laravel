@@ -3,7 +3,7 @@
 @section('title', 'Edit Profil')
 
 @section('content')
-<div class="container mb-5">
+<div class="container mb-5 w-50 mx-auto">
     <h1 style="margin-top:100px;">Edit Profil</h1>
     @if($errors->any())
         @foreach($errors->all() as $err)

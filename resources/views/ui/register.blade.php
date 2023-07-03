@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gubuktani - @yield('title')</title>
+    <title>Gubuktani - Daftar</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="{{ URL::asset('css/styles.css') }}" rel="stylesheet" />
@@ -159,7 +159,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Telepon</label>
-                    <input type="number" name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{old('phone')}}>
+                    <input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="12" name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{old('phone')}}">
                     @error('phone')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -213,9 +213,9 @@
                 <hr>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">No KTP</label>
-                    <input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="16" name="ktp" class="form-control @error('ktp') is-invalid @enderror" value="{{old('ktp')}} >
+                    <input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="16" name="ktp" class="form-control @error('ktp') is-invalid @enderror" value="{{old('ktp')}}" >
                     @error('ktp')
-                        <span class="invalid-feedback" role="alert">
+                        <span class= "invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror

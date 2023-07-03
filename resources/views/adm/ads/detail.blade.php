@@ -16,9 +16,7 @@ use Carbon\Carbon;
     </ol>
     <div class="card mb-4 mt-4">
         <div class="card-body">
-            DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-            <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-            .
+     
         </div>
     </div>
     @if(session('success'))
@@ -47,7 +45,7 @@ use Carbon\Carbon;
             <h3 class="mt-3"><b>Detail Iklan</b></h3>
             <div class="row mt-3">
                 <div class="col-md-3">
-                    <b>Luas</b>
+                    <b>Luas dalam Hektar</b>
                     <p>{{ $ad->large }}</p>
                 </div>
                 <div class="col-md-3">
@@ -90,10 +88,10 @@ use Carbon\Carbon;
             <div class="bd-example bd-example-images">
                 <b>Gambar</b>
                 <div class="mt-3">
-                    <img src="{{ asset('ads/' . $ad->picture_one) }}" alt="{{ $ad->title }}" class="img-thumbnail fit-image me-2"">
-                    <img src="{{ asset('ads/' . $ad->picture_two) }}" alt="{{ $ad->title }}" class="img-thumbnail fit-image me-2"">
-                    <img src="{{ asset('ads/' . $ad->picture_three) }}" alt="{{ $ad->title }}" class="img-thumbnail fit-image me-2"">
-                    <img src="{{ asset('ads/' . $ad->picture_four) }}" alt="{{ $ad->title }}" class="img-thumbnail fit-image me-2"">
+                    <img src="{{ URL::asset('ads/' . $ad->picture_one) }}" alt="{{ $ad->title }}" class="img-thumbnail fit-image me-2"">
+                    <img src="{{ URL::asset('ads/' . $ad->picture_two) }}" alt="{{ $ad->title }}" class="img-thumbnail fit-image me-2"">
+                    <img src="{{ URL::asset('ads/' . $ad->picture_three) }}" alt="{{ $ad->title }}" class="img-thumbnail fit-image me-2"">
+                    <img src="{{ URL::asset('ads/' . $ad->picture_four) }}" alt="{{ $ad->title }}" class="img-thumbnail fit-image me-2"">
                 </div>
             </div>
             <hr>
@@ -116,15 +114,15 @@ use Carbon\Carbon;
                     <p>{{ $facility->view ?? "Data tidak ada" }}</p>
                 </div>
                 <div class="col-md-3">
-                    <b>Jarak Sumber Air</b>
+                    <b>Jarak Sumber Air Dalam Meter</b>
                     <p>{{ $facility->range ?? "Data tidak ada" }}</p>
                 </div>
                 <div class="col-md-3">
-                    <b>Suhu</b>
+                    <b>Suhu dalam Celcius</b>
                     <p>{{ $facility->temperature ?? "Data tidak ada" }}</p>
                 </div>
                 <div class="col-md-3">
-                    <b>Ketinggian </b>
+                    <b>Ketinggian dalam Mdpl</b>
                     <p>{{ $facility->height ?? "Data tidak ada" }}</p>
                 </div>
             </div>
@@ -167,7 +165,7 @@ use Carbon\Carbon;
             <div class="bd-example bd-example-images">
                 <b>Foto Profil</b>
                 <div class="mt-3">
-                    <img src="{{ asset('profiles/' . $ad->user->profile_picture) }}" alt="{{ $ad->user->fname }}" class="img-thumbnail fit-image me-2"">
+                    <img src="{{ URL::asset('profiles/' . $ad->user->profile_picture) }}" alt="{{ $ad->user->fname }}" class="img-thumbnail fit-image me-2"">
                 </div>
             </div>
             <hr>

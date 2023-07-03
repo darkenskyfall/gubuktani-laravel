@@ -3,12 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ads;
+use App\Models\Rents;
 use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    // public function __construct()
+    // {
+    //     $this->middleware(['auth','verified']);
+    // }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +29,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $ads = Ads::get();
+        $ads = Ads::where('status', 0)->get()->reverse();
         $cats = Categories::get();
+
+        
+        $rents = Rents::where('status', 1)->get();
+        foreach ($rents as $key => $value) {
+            $firstDate = Carbon::now();
+            $createdAt = Carbon::parse($value->created_at);
+            $secondDate = $createdAt->addYears($value->period);
+            if ($firstDate->gt($secondDate)) {
+                $a = Ads::find($value->id_lahan);
+                $a->update(['status' => 0]);
+            }
+        }
+        
         return view('ui.home', ['ads' => $ads, 'cats' => $cats]);
     }
 

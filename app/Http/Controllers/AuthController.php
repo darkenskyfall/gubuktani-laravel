@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customers;
+use App\Models\UserVerify;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -19,12 +23,32 @@ class AuthController extends Controller
 
         if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
+
+
+            if (Auth::guard('web')->user()->email_verified_at == NULL){
+                $id = Auth::guard('web')->user()->id;
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                $token = Str::random(64);
+
+                UserVerify::create([
+                    'user_id' => $id,
+                    'token' => $token
+                ]);
+
+                Mail::send('ui.email.emailVerificationEmail', ['token' => $token], function($message) use($request){
+                    $message->to($request->email);
+                    $message->subject('Email Verification Mail');
+                });
+                return view("ui.verification", ["id" => $id, "email" => $request->email]);
+            }
  
             return redirect()->route('home');
         }
  
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Email tidak cocok dengand data kami.',
         ])->onlyInput('email');
     }
 
@@ -71,7 +95,7 @@ class AuthController extends Controller
         $request->profile_picture->move(public_path('profiles'), $imageName);
 
         $imageKTP = time().'.'.$request->ktp_picture->extension();  
-        $request->ktp_picture->move(public_path('profiles'), $imageKTP);
+        $request->ktp_picture->move(public_path('ktps'), $imageKTP);
 
 
         $user = new Customers([
@@ -88,7 +112,57 @@ class AuthController extends Controller
         ]);
         $user->save();
 
-        return redirect()->route('login')->with('success', 'Registrasi Berhasil. Silakan Login!');
+        $token = Str::random(64);
+
+        UserVerify::create([
+            'user_id' => $user->id,
+            'token' => $token
+        ]);
+
+        Mail::send('ui.email.emailVerificationEmail', ['token' => $token], function($message) use($request){
+            $message->to($request->email);
+            $message->subject('Email Verification Mail');
+        });
+
+        return view("ui.verification", ["id" => $user->id, "email" => $user->email]);
+    }
+
+    public function resendEmail(Request $request){
+        $token = Str::random(64);
+
+        UserVerify::create([
+            'user_id' => $request->id,
+            'token' => $token
+        ]);
+
+        Mail::send('ui.email.emailVerificationEmail', ['token' => $token], function($message) use($request){
+            $message->to($request->email);
+            $message->subject('Email Verification Mail');
+        });
+        
+        return view("ui.verification", ["id" => $request->id, "email" => $request->email]);
+    }
+
+    public function verifyAccount($token)
+    {
+        $verifyUser = UserVerify::where('token', $token)->first();
+  
+        $message = 'Sorry your email cannot be identified.';
+  
+        if(!is_null($verifyUser) ){
+            $user = $verifyUser->user;
+              
+            if(!$user->email_verified_at) {
+                $verifyUser->user->email_verified_at = Carbon::now();
+                $verifyUser->user->ktp_verified_at = NULL;
+                $verifyUser->user->save();
+                $message = "Email anda berhasil di verifikasi. anda bisa login sekarang.";
+            } else {
+                $message = "Email anda sudah di verifikasi. anda bisa login sekarang";
+            }
+        }
+  
+      return redirect()->route('login')->with('message', $message);
     }
 
     /**

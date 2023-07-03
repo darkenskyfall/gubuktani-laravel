@@ -3,7 +3,7 @@
 @section('title', 'Booking')
 
 @section('content')
-<div class="container mb-5">
+<div class="container mb-5 w-50 mx-auto">
     <h1 style="margin-top:100px;">Booking</h1>
     <div class="card mt-5 mb-5">
         <h5 class="card-header">Data Lahan</h5>
@@ -29,4 +29,8 @@
         <button type="submit" class="btn btn-success mt-3">Booking</button>
     </form>
 </div>
+<script>
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementsByName("survey_date")[0].setAttribute('min', today);
+</script>
 @endsection

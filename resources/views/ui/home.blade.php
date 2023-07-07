@@ -80,7 +80,7 @@
         <div class="container py-5 text-center">
             <h1 class="display-5 fw-bold mb-3">Kategori</h1>
             @foreach($cats as $cat)
-            <a href="{{ route('ads.search', 'search=' . $cat->cateogory) }}" class="btn btn-outline-light">{{$cat->cateogory}}</a>
+            <a href="{{ route('ads.search', 'id=' . $cat->id) }}" class="btn btn-outline-light">{{$cat->cateogory}}</a>
             @endforeach
         </div>
     </div>

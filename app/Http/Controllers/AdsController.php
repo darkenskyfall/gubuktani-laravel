@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ads;
 use App\Models\Wishlists;
 use App\Models\Booking;
+use App\Models\Categories;
 use App\Models\Facilities;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,21 +20,30 @@ class AdsController extends Controller
      */
     public function index()
     {
-        $ads = Ads::get()->reverse();
+        $ads = Ads::where('status', 1)->get()->reverse();
         $search = "";
         return view('ui.list', ['ads' => $ads, 'search' => $search]);
     }
 
     public function search(Request $request)
     {
-        // menangkap data pencarian
-		$search = $request->search;
- 
-        // mengambil data dari table pegawai sesuai pencarian data
-        $ads = Ads::where('title', 'like' ,"%".$search."%")->get();
+        if ($request->id != null){
+            $id = $request->id;
 
-            // mengirim data pegawai ke view index
-        return view('ui.list',['ads' => $ads, 'search' => $search]);
+            $category = Categories::find($id);
+            $ads = Ads::where('id_category', $id)->get();
+
+            return view('ui.list',['ads' => $ads, 'category' => $category]);
+        }else{
+            // menangkap data pencarian
+            $search = $request->search;
+    
+            // mengambil data dari table pegawai sesuai pencarian data
+            $ads = Ads::where('title', 'like' ,"%".$search."%")->get();
+
+                // mengirim data pegawai ke view index
+            return view('ui.list',['ads' => $ads, 'search' => $search]);
+        }
     }
 
     /**

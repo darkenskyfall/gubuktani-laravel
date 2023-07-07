@@ -158,12 +158,18 @@
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Pemandangan</label>
-            <input type="text" name="view" class="form-control" value="{{ old('view') }}">
+            <!-- <input type="text" name="view" class="form-control" value="{{ old('view') }}">
             @error('view')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
-            @enderror
+            @enderror -->
+            <select class="form-select" name="view" aria-label="Default select example">
+                <option value="Pegunungan">Pegunungan</option>
+                <option value="Persawahan">Persawahan</option>
+                <option value="Jalan Raya">Jalan Raya</option>
+                <option value="Lainnya">Lainnya</option>
+            </select>
             <small><i>Menggambarkan panorama atau tampilan visual yang dapat dilihat dari lokasi tertentu. Dapat mencakup informasi tentang keindahan alam, bangunan, dan elemen lainnya yang mempengaruhi pengalaman visual.</i></small>
         </div>
         <div class="mb-3">
@@ -190,12 +196,18 @@
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Ketinggian <b>Mdpl</b></label>
-            <input type="text" name="height" class="form-control" value="{{ old('height') }}">
+            <!-- <input type="text" name="height" class="form-control" value="{{ old('height') }}">
             @error('height')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
-            @enderror
+            @enderror -->
+            <select class="form-select" name="height" aria-label="Default select example">
+                <option value="Kurang dari 10 Mdpl">Kurang dari 10 Mdpl</option>
+                <option value="10 - 30 Mdpl">10 - 30 Mdpl</option>
+                <option value="30 - 40 Mdpl">30 - 40 Mdpl</option>
+                <option value="Lebih dari 50 Mdpl">Lebih dari 50 Mdpl</option>
+            </select>
             <small><i>Merupakan ketinggian suatu lokasi di atas permukaan laut (Mdpl) dalam satuan meter. Menyediakan informasi tentang elevasi atau ketinggian wilayah tertentu yang dapat mempengaruhi suhu, tekanan udara, dan iklim di lokasi tersebut.</i></small>
         </div>
 

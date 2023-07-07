@@ -164,17 +164,18 @@
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Pemandangan</label>
-            <input type="text" name="view" class="form-control" value="{{ old('view', $facility->view) }}">
-            @error('view')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
+            <select class="form-select" name="range" aria-label="Default select example">
+                <option value="{{ $facility->view }}">{{ $facility->view }}</option>
+                <option value="Kurang dari 1 Meter">Kurang dari 1 Meter</option>
+                <option value="2 Meter">2 Meter</option>
+                <option value="3 Meter">3 Meter</option>
+                <option value="4 Meter">4 Meter</option>
+                <option value="Lebih dari 4 Meter">Lebih dari 4 Meter</option>
+            </select>
             <small><i>Menggambarkan panorama atau tampilan visual yang dapat dilihat dari lokasi tertentu. Dapat mencakup informasi tentang keindahan alam, bangunan, dan elemen lainnya yang mempengaruhi pengalaman visual.</i></small>
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Jarak Sumber Air <b>Meter</b></label>
-            <!-- <input type="text" name="range" class="form-control" value="{{ old('range', $facility->range) }}"> -->
             <select class="form-select" name="range" aria-label="Default select example">
                 <option value="{{ $facility->range }}">{{ $facility->range }}</option>
                 <option value="Kurang dari 1 Meter">Kurang dari 1 Meter</option>
@@ -197,12 +198,13 @@
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Ketinggian <b>Mdpl</b></label>
-            <input type="text" name="height" class="form-control" value="{{ old('height', $facility->height) }}">
-            @error('height')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
+            <select class="form-select" name="height" aria-label="Default select example">
+                <option value="{{ $facility->height }}">{{ $facility->height }}</option>
+                <option value="Kurang dari 10 Mdpl">Kurang dari 10 Mdpl</option>
+                <option value="10 - 30 Mdpl">10 - 30 Mdpl</option>
+                <option value="30 - 40 Mdpl">30 - 40 Mdpl</option>
+                <option value="Lebih dari 50 Mdpl">Lebih dari 50 Mdpl</option>
+            </select>
             <small><i>Merupakan ketinggian suatu lokasi di atas permukaan laut (Mdpl) dalam satuan meter. Menyediakan informasi tentang elevasi atau ketinggian wilayah tertentu yang dapat mempengaruhi suhu, tekanan udara, dan iklim di lokasi tersebut.</i></small>
         </div>
 
@@ -228,108 +230,6 @@
             <small>Lewati jika tidak mengganti gambar lahan 4</small>
         </div>
         <button type="submit" class="btn btn-primary mt-3">Perbarui Iklan</button>
-        <!-- @csrf
-        <h4 class="mt-5">Data Awal Lahan*</h4>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Kategori</label>
-            <select class="form-select" name="id_category" aria-label="Default select example" required>
-                <option value="{{ $ad->categories->id }}">{{ $ad->categories->cateogory }}</option>
-                @foreach($cats as $cat)
-                <option value="{{ $cat->id }}">{{ $cat->cateogory }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Judul</label>
-            <input type="text" value="{{ $ad->title }}" name="title" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Alamat Lengkap</label>
-            <textarea name="address" name="address" class="form-control" required cols="30" rows="10">{{ $ad->address }}</textarea>
-        </div>
-        <h4 class="mt-5">Spesifikasi Lahan*</h4>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Luas</label>
-            <input type="text" value="{{ $ad->large }}" name="large" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Jenis Sertifikasi Tanah</label>
-            <select class="form-select" name="certification" aria-label="Default select example" required>
-                <option value="{{ $ad->certification }}">{{ $ad->certification }}</option>
-                <option value="SHM - Sertifikat Hak Milik">SHM - Sertifikat Hak Milik</option>
-                <option value="HGU - Hak Guna Bangunan">HGU - Hak Guna Bangunan</option>
-                <option value="Petok D">Petok D</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Deskripsi</label>
-            <textarea name="desc" class="form-control" required cols="30" rows="10">{{ $ad->desc }}</textarea>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Harga</label>
-            <input type="number" value="{{ $ad->price }}" name="price" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Kurun Sewa</label>
-            <select class="form-select" name="period" aria-label="Default select example" required>
-                <option value="{{ $ad->period }}">{{ $ad->period }}</option>
-                <option value="Tahun">Tahun</option>
-            </select>
-        </div>
-        <h4 class="mt-5">Fasilitas</h4>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Irigasi</label>
-            <input type="text" value="{{ $ad->irigation }}" name="irigation" class="form-control" >
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Jenis Tanah</label>
-            <input type="text" value="{{ $ad->land }}" name="land" class="form-control" >
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Akses Jalan</label>
-            <input type="text" value="{{ $ad->road }}" name="road" class="form-control" >
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Pemandangan</label>
-            <input type="text" value="{{ $ad->view }}" name="view" class="form-control" >
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Jarak Sumber Air</label>
-            <input type="text" value="{{ $ad->range }}" name="range" class="form-control" >
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Suhu</label>
-            <input type="text" value="{{ $ad->temperature }}" name="temperature" class="form-control" >
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Ketinggian</label>
-            <input type="text" value="{{ $ad->height }}" name="height" class="form-control" >
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Larangan</label>
-            <textarea name="notice" class="form-control"  cols="30" rows="10">{{ $ad->notice }}</textarea>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Gambar Lahan 1</label>
-            <input type="file" name="picture_one" class="form-control" >
-            <small>Lewati jika tidak mengganti gambar lahan 1</small>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Gambar Lahan 2</label>
-            <input type="file" name="picture_two" class="form-control" >
-            <small>Lewati jika tidak mengganti gambar lahan 2</small>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Gambar Lahan 3</label>
-            <input type="file" name="picture_three" class="form-control" >
-            <small>Lewati jika tidak mengganti gambar lahan 3</small>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Gambar Lahan 4</label>
-            <input type="file" name="picture_four" class="form-control" >
-            <small>Lewati jika tidak mengganti gambar lahan 4</small>
-        </div>
-        <button type="submit" class="btn btn-primary mt-3">Perbarui Iklan</button> -->
     </form>
 </div>
 <script>

@@ -29,7 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $ads = Ads::where('status', 0)->get()->reverse();
+        $ads = Ads::where('condition', 0)->where('status', 1)->get()->reverse();
         $cats = Categories::get();
 
         

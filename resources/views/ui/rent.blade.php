@@ -3,6 +3,15 @@
 @section('title', 'Sewa Lahan')
 
 @section('content')
+<script>
+    function formatNumberWithCommas() {
+        var input = document.getElementById('myInput');
+        var value = input.value;
+        var sanitizedValue = value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+        var formattedValue = sanitizedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        input.value = formattedValue;
+    }
+</script>
 <div class="container mb-5 w-50 mx-auto">
     <h1 style="margin-top:100px;">Sewa Lahan</h1>
     <div class="card mt-5 mb-5">
@@ -23,7 +32,7 @@
         <input type="hidden" name="id_lahan" value="{{ $ad->id }}">
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Harga Kesepakatan</label>
-            <input type="number" name="done_price" class="form-control" required>
+            <input type="number" id="myInput" oninput="formatNumberWithCommas()" name="done_price" class="form-control" required>
         </div>
         <div class="row">
             <div class="col-md-6">

@@ -65,7 +65,8 @@ class RentController extends Controller
         $agreement = time() . '.' . $request->agreement_photo->extension();
         $request->agreement_photo->move(public_path('agreement'), $agreement);
 
-        $fix_price = $request->done_price * $request->period; 
+        $donePrice = (int) str_replace(',', '', $request->price);
+        $fix_price = $donePrice * $request->period; 
 
         $data = new Rents([
             'id_user' => Auth::guard('web')->user()->id,

@@ -130,7 +130,7 @@
                 <div class="col-md-2">
                     <form action="{{ route('ads.update.wishlist', $ad->id) }}" method="post">
                         @csrf
-                        <button class="btn {{ ($wishlist == null) ? 'btn-light' : 'btn-danger' }} mb-3" onclick="{{ ($wishlist == null) ? '' : 'return confirm("Apakah anda yakin untuk menghapus wishlist?")' }}">{{ ($wishlist == null) ? 'Tambahkan Wishlist' : 'Hapus dari Wishlist' }}</button>
+                        <button class="btn {{ ($wishlist == null) ? 'btn-success' : 'btn-danger' }} mb-3" onclick="{{ ($wishlist == null) ? '' : 'return confirm("Apakah anda yakin untuk menghapus wishlist?")' }}">{{ ($wishlist == null) ? 'Tambahkan Wishlist' : 'Hapus dari Wishlist' }}</button>
                     </form>
 
                 </div>
@@ -141,7 +141,7 @@
                         @if($booking == null)
                         <a href="{{ route('ads.show.booking', $ad->id) }}" class="btn {{ ($booking == null) ? 'btn-light' : 'btn-danger' }} mb-3">{{ ($booking == null) ? 'Tambahkan Booking' : 'Hapus dari Booking' }}</a>
                         @else
-                        <button class="btn {{ ($booking == null) ? 'btn-light' : 'btn-danger' }} mb-3" onclick="{{ ($booking == null) ? '' : 'return confirm("Apakah anda yakin untuk menghapus booking?")' }}">{{ ($booking == null) ? 'Tambahkan Booking' : 'Hapus dari Booking' }}</button>
+                        <button class="btn {{ ($booking == null) ? 'btn-success' : 'btn-danger' }} mb-3" onclick="{{ ($booking == null) ? '' : 'return confirm("Apakah anda yakin untuk menghapus booking?")' }}">{{ ($booking == null) ? 'Tambahkan Booking' : 'Hapus dari Booking' }}</button>
                         @endif
                     </form>
                 </div>

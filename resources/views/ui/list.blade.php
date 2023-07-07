@@ -5,7 +5,10 @@
 @section('content')
 <div class="container">
     <h1 class="mt-5">Cari Lahan</h1>
-    @if($search != "")
+
+    @if($category != null)
+    <h4>Kategori {{ $category->cateogory }}</h4>
+    @elseif($search != "")
     <h4>Hasil Pencarian dari "{{ $search }}"</h4>
     @endif
     @if(session('success'))

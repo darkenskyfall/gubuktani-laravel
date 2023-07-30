@@ -5,10 +5,10 @@
 @section('content')
 <div class="container mb-5 w-50 mx-auto">
     <h1 style="margin-top:100px;">Kontak</h1>
-    <p>Jika anda merasa terbantu dengan website ini diharapkan sedianya mengirimkan kritik saran kepada kami selaku penyedia website gubuktani.co.id segala sesuatu yang berkaitan dengan website ini atau kesepakatan bisnis dengan kami anda bisa menghubungi kontak dibawah ini</p>
+    <p>Jika anda merasa terbantu dengan website ini diharapkan sedianya mengirimkan kritik saran kepada kami selaku penyedia website Gubuktani.online segala sesuatu yang berkaitan dengan website ini atau kesepakatan bisnis dengan kami anda bisa menghubungi kontak dibawah ini</p>
 
     <ul class="list-group mt-3">
-        <li class="list-group-item disabled">support@gubuktani.co.id</li>
+        <li class="list-group-item disabled">support@Gubuktani.online</li>
         <li class="list-group-item disabled">Jl . Manukan Rejo III 1C / 8 , Manukan Kulon , Tandes , Surabaya Jawa Timur 60185</li>
         <li class="list-group-item disabled">+6285 - 881 - 824 - 590</li>
     </ul>

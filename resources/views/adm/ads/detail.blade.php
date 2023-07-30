@@ -25,7 +25,7 @@ use Carbon\Carbon;
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            DataTable Example
+            Lampiran Data
         </div>
         <div class="card-body">
             <h3><b>Sekilas Iklan</b></h3>
@@ -45,7 +45,7 @@ use Carbon\Carbon;
             <h3 class="mt-3"><b>Detail Iklan</b></h3>
             <div class="row mt-3">
                 <div class="col-md-3">
-                    <b>Luas dalam Hektar</b>
+                    <b>Luas dalam Are</b>
                     <p>{{ $ad->large }}</p>
                 </div>
                 <div class="col-md-3">

@@ -20,7 +20,7 @@ use Carbon\Carbon;
     <div class="card mb-4 mt-3">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            DataTable Example
+            Lampiran Data
         </div>
         <div class="card-body">
             <h3 class="mt-3"><b>Profil Pemilik</b></h3>
@@ -95,7 +95,7 @@ use Carbon\Carbon;
                                     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Iklan</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="booking-tab" data-bs-toggle="tab" data-bs-target="#booking-tab-pane" type="button" role="tab" aria-controls="booking-tab-pane" aria-selected="false">Pembooking</button>
+                                    <button class="nav-link" id="booking-tab" data-bs-toggle="tab" data-bs-target="#booking-tab-pane" type="button" role="tab" aria-controls="booking-tab-pane" aria-selected="false">Reservasi</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="penyewa-tab" data-bs-toggle="tab" data-bs-target="#penyewa-tab-pane" type="button" role="tab" aria-controls="penyewa-tab-pane" aria-selected="false">Penyewa</button>

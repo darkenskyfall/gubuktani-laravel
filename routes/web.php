@@ -72,7 +72,8 @@ Route::post('/verifikasi-email', [AuthController::class, 'resendEmail'])->name('
 Route::get('akun/verifikasi/{token}', [AuthController::class, 'verifyAccount'])->name('user.verify'); 
 
 Route::prefix('ads')->group(function () {
-    Route::get('/cari',[AdsController::class, 'search'])->name('ads.search');    
+    Route::get('/cari',[AdsController::class, 'search'])->name('ads.search');
+    Route::get('/filter',[AdsController::class, 'filter'])->name('ads.filter');    
     Route::get('/list',[AdsController::class, 'index'])->name('ads');    
     Route::get('/create',[AdsController::class, 'create'])->name('ads.create');
     Route::post('/create',[AdsController::class, 'store'])->name('ads.store');

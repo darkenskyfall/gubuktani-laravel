@@ -8,7 +8,7 @@
 
     <h3 class="mt-5">Cara Daftar</h3>
     <ul class="list-group mt-3">
-        <li class="list-group-item disabled">Buka link gubuktani.co.id</li>
+        <li class="list-group-item disabled">Buka link Gubuktani.online</li>
         <li class="list-group-item disabled">Klik login</li>
         <li class="list-group-item disabled">Klik daftar sekarang yang letaknya dibawah form</li>
         <li class="list-group-item disabled">Isi data diri anda</li>
@@ -18,7 +18,7 @@
 
     <h3 class="mt-5">Cara Membuat Iklan</h3>
     <ul class="list-group mt-3">
-        <li class="list-group-item disabled">Buka link gubuktani.co.id</li>
+        <li class="list-group-item disabled">Buka link Gubuktani.online</li>
         <li class="list-group-item disabled">Klik login jika punya akun</li>
         <li class="list-group-item disabled">Jika tidak punya maka bisa daftar terlebih dahulu</li>
         <li class="list-group-item disabled">Isi data form dengan benar</li>

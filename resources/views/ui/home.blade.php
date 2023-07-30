@@ -2,6 +2,27 @@
 
 @section('title', 'Sewa Lahan Pertanian Kini Mudah dan Cepat')
 
+@section('category')
+<nav class="navbar navbar-expand-lg p-3" style="background: #333333 ;">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white" href="{{ url('/') }}">Kategori</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                @foreach($cats as $cat)
+                <li class="nav-item">
+                    <a href="{{ route('ads.search', 'id=' . $cat->id) }}" class="nav-link text-white">{{$cat->cateogory}}</a>
+                </li>
+                @endforeach
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+@endsection
+
 @section('content')
 <div class="album py-5">
     <div class="container">
@@ -20,8 +41,8 @@
                 <div class="carousel-item active" data-bs-interval="10000">
                     <img src="{{ URL::asset('assets/img/sawah-satu.jpeg') }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block text-white">
-                        <h5>Aman Dan Terpercaya</h5>
-                        <p>Gubuktani.co.id menghargai dan menjamin privasi data pribadi anda dalam memilih lahan serta memberikan rekomendasi yang terpercaya untuk anda.</p>
+                        <h5>Aman Dan Terverifikasi</h5>
+                        <p>Semua tanah yang terdaftar telah terverifikasi menggunakan aplikasi Sentuh Tanahku dan menjamin privasi data pribadi anda dalam memilih lahan serta memberikan rekomendasi yang terpercaya untuk anda.</p>
                     </div>
                 </div>
                 <div class="carousel-item" data-bs-interval="2000">
@@ -35,7 +56,7 @@
                     <img src="{{ URL::asset('assets/img/sawah-tiga.jpeg') }}" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block text-white">
                         <h5>Bersahabat</h5>
-                        <p>Posting di Gubuktani.co.id 100% Gratis dan memberikan layanan prima bagi anda dalam mengiklankan lahan anda agar dikenal secara luas oleh masyarakat.</p>
+                        <p>Posting di Gubuktani.online 100% Gratis dan memberikan layanan prima bagi anda dalam mengiklankan lahan anda agar dikenal secara luas oleh masyarakat.</p>
                     </div>
                 </div>
             </div>
@@ -57,7 +78,7 @@
                     <h4><b>{{ $ad->title }}</b></h4>
                     <ul class="mt-3">
                         <li><b>{{ $ad->categories->cateogory }}</b></li>
-                        <li>Luas {{ $ad->large }} <b>Ha</b></li>
+                        <li>Luas {{ $ad->large }} <b>Are</b></li>
                         <li>Rp. {{ number_format($ad->price) }} / {{ $ad->period }}</li>
                     </ul>
                     @if($ad->status == 0)
@@ -90,8 +111,8 @@
     <div class="row">
       <div class="col-lg-4">
       <img src="{{ URL::asset('assets/img/sawah-satu.jpeg') }}" class="rounded-circle" width="140" height="140" alt="...">
-        <h2 class="fw-normal mt-3">Aman Dan Terpercaya</h2>
-        <p>SGubuktani.co.id menghargai dan menjamin privasi data pribadi anda dalam memilih lahan serta memberikan rekomendasi yang terpercaya untuk anda..</p>
+        <h2 class="fw-normal mt-3">Aman Dan Terverifikasi</h2>
+        <p>Semua tanah yang terdaftar telah terverifikasi menggunakan aplikasi Sentuh Tanahku dan menjamin privasi data pribadi anda dalam memilih lahan serta memberikan rekomendasi yang terpercaya untuk anda.</p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
       <img src="{{ URL::asset('assets/img/sawah-dua.jpeg') }}" class="rounded-circle" width="140" height="140" alt="...">
@@ -103,7 +124,7 @@
       <img src="{{ URL::asset('assets/img/sawah-tiga.jpeg') }}" class="rounded-circle" width="140" height="140" alt="...">
 
         <h2 class="fw-normal mt-3">Bersahabat</h2>
-        <p>Posting di Gubuktani.co.id 100% Gratis dan memberikan layanan prima bagi anda dalam mengiklankan lahan anda agar dikenal secara luas oleh masyarakat..</p>
+        <p>Posting di Gubuktani.online 100% Gratis dan memberikan layanan prima bagi anda dalam mengiklankan lahan anda agar dikenal secara luas oleh masyarakat..</p>
       </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
 

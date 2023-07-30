@@ -25,7 +25,7 @@ use Carbon\Carbon;
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            DataTable Example
+            Lampiran Data
         </div>
         <div class="card-body">
             <h3 class="mt-3"><b>Data Verifikasi Pengguna</b></h3>

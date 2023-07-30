@@ -47,4 +47,10 @@ class Ads extends Model
     {
         return $this->belongsTo(Categories::class, 'id_category');
     }
+
+    public function facility()
+    {
+        // Assuming the foreign key is "id_ads" in the "facility" table
+        return $this->hasOne(Facilities::class, 'id_ads');
+    }
 }

@@ -107,7 +107,7 @@
 
     <nav class="navbar navbar-expand-lg p-3" style="background: #2ecc71;">
         <div class="container-fluid">
-            <a class="navbar-brand text-white" href="{{ url('/') }}"><i class="fas fa-seedling"></i> Gubuktani.co.id</a>
+            <a class="navbar-brand text-white" href="{{ url('/') }}"><i class="fas fa-seedling"></i> Gubuktani.online</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -119,7 +119,7 @@
         <div class="container mb-5 w-50 mx-auto">
             <center>
                 <i class="fas fa-seedling" style="margin-top:100px; font-size:80px;"></i>
-                <h2 class="display-6">Gubuktani.co.id</h2>
+                <h2 class="display-6">Gubuktani.online</h2>
             </center>
             <h1 style="margin-top:40px;">Verifikasi Email</h1>
 

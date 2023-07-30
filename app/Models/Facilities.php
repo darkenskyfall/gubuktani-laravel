@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Facilities extends Model
 {
     use HasFactory;
+
+    protected $table = 'facilities';
+
     protected $fillable = [
         'id_ads',
         'land',
@@ -17,4 +20,10 @@ class Facilities extends Model
         'height',
         'temperature',
     ];
+
+    public function ad()
+    {
+        // Assuming the foreign key is "id_ads" in the "facility" table
+        return $this->belongsTo(Ads::class, 'id_ads');
+    }
 }

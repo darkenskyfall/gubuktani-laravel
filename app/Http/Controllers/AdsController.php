@@ -20,9 +20,54 @@ class AdsController extends Controller
      */
     public function index()
     {
-        $ads = Ads::where('status', 1)->get()->reverse();
+        $ads = Ads::where('condition', 0)->where('status', 1)->where('status', 1)->latest()->paginate(6);
         $search = "";
-        return view('ui.list', ['ads' => $ads, 'search' => $search]);
+        return view('ui.list', ['ads' => $ads, 'search' => $search, 'category' => NULL,'filter' => NULL]);
+    }
+
+    public function filter(Request $request){
+        // mengambil data dari table pegawai sesuai pencarian data
+
+        $search = $request->search;
+        $filter = $request->filter;
+
+        if ($filter == ""){
+            $ads = Ads::where('status', 1)->latest()->paginate(6);
+            $search = "";
+            return view('ui.list', ['ads' => $ads, 'search' => $search, 'category' => NULL,'filter' => NULL]);
+        }
+    
+        $ads = Ads::join('facilities', 'ads.id', '=', 'facilities.id_ads')->where('facilities.land', '=', $filter);
+
+        if ($request->id == NULL && $request->search == NULL){
+            $newAds = $ads->latest('ads.created_at')->paginate(6);
+            return view('ui.list',['ads' => $newAds, 'search' => NULL, 'category' => NULL, 'filter' => $filter]);
+        }
+
+        if ($request->id != NULL && $request->search == NULL){
+            $id = $request->id;
+            $category = Categories::find($id);
+            $newAds = $ads->where('id_category', $id)->latest('ads.created_at')->paginate(6);
+            return view('ui.list',['ads' => $newAds, 'search' => NULL, 'category' => $category, 'filter' => $filter]);
+        }
+
+        if ($request->id == NULL && $request->search != NULL){
+            $search = $request->search;
+            $id = $request->id;
+            $newAds = $ads->where('id_category', $id)->where('title', 'like' ,"%".$search."%")->latest('ads.created_at')->paginate(6);
+            return view('ui.list',['ads' => $newAds, 'search' => $search, 'category' => NULL, 'filter' => $filter]);
+        }
+
+        if ($request->id != NULL && $request->search != NULL){
+            $id = $request->id;
+            $category = Categories::find($id);
+            $search = $request->search;
+            $newAds = $ads->where('id_category', $id)->where('title', 'like' ,"%".$search."%")->latest('ads.created_at')->paginate(6);
+            return view('ui.list',['ads' => $ads, 'search' => $search, 'category' => $category, 'filter' => $filter]);
+        }
+        
+        // mengirim data pegawai ke view index
+        return view('ui.list',['ads' => $ads, 'search' => NULL, 'category' => NULL]);
     }
 
     public function search(Request $request)
@@ -31,18 +76,18 @@ class AdsController extends Controller
             $id = $request->id;
 
             $category = Categories::find($id);
-            $ads = Ads::where('id_category', $id)->get();
+            $ads = Ads::where('id_category', $id)->latest()->paginate(6);
 
-            return view('ui.list',['ads' => $ads, 'category' => $category]);
+            return view('ui.list',['ads' => $ads, 'category' => $category, 'filter' => NULL]);
         }else{
             // menangkap data pencarian
             $search = $request->search;
     
             // mengambil data dari table pegawai sesuai pencarian data
-            $ads = Ads::where('title', 'like' ,"%".$search."%")->get();
+            $ads = Ads::where('title', 'like' ,"%".$search."%")->latest()->paginate(6);
 
                 // mengirim data pegawai ke view index
-            return view('ui.list',['ads' => $ads, 'search' => $search]);
+            return view('ui.list',['ads' => $ads, 'search' => $search, 'category' => NULL, 'filter' => NULL]);
         }
     }
 

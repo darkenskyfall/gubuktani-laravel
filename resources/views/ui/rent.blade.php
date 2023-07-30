@@ -32,7 +32,7 @@
         <input type="hidden" name="id_lahan" value="{{ $ad->id }}">
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Harga Kesepakatan</label>
-            <input type="number" id="myInput" oninput="formatNumberWithCommas()" name="done_price" class="form-control" required>
+            <input type="text" id="myInput" oninput="formatNumberWithCommas()" name="done_price" class="form-control" required>
         </div>
         <div class="row">
             <div class="col-md-6">

@@ -75,7 +75,7 @@
         <p>{{ $ad->address }}</p>
 
         <h5>Luas  & Sertifikasi</h5>
-        <p>{{ $ad->large }} <b>Ha</b> & {{ $ad->certification }}</p>
+        <p>{{ $ad->large }} <b>Are</b> & {{ $ad->certification }}</p>
 
         <div class="row">
 

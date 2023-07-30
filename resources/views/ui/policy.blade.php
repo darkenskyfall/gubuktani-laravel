@@ -5,14 +5,14 @@
 @section('content')
 <div class="container mb-5">
     <h1 style="margin-top:100px;">Kebijakan Privasi</h1>
-    <p>Pada dasarnya, kami sangat menjaga privasi pengguna Gubuktani.co.id baik Anda sebagai pencari Lahan Sewa maupun pemilik lahan. Dalam halaman ini kami akan menjelaskan semua informasi terkait privasi dan bagaimana data pengguna kami simpan dan kelola di Gubuktani.co.id.</p>
+    <p>Pada dasarnya, kami sangat menjaga privasi pengguna Gubuktani.online baik Anda sebagai pencari Lahan Sewa maupun pemilik lahan. Dalam halaman ini kami akan menjelaskan semua informasi terkait privasi dan bagaimana data pengguna kami simpan dan kelola di Gubuktani.online.</p>
 
     <p><strong>Data User</strong></p>
 
     <p>User dalam hal ini termasuk di antaranya pencari lahan sewa dan pemilik lahan.
-        Adapun data user kami simpan secara aman di pusat data Gubuktani.co.id.
-        Dalam hal ini Gubuktani.co.id melindungi privasi user dan tidak akan memberikan data user Gubuktani.co.id kepada pihak ketiga tanpa melalui persetujuan user tersebut.
-        Data Pengunjung Situs Gubuktani.co.id</p>
+        Adapun data user kami simpan secara aman di pusat data Gubuktani.online.
+        Dalam hal ini Gubuktani.online melindungi privasi user dan tidak akan memberikan data user Gubuktani.online kepada pihak ketiga tanpa melalui persetujuan user tersebut.
+        Data Pengunjung Situs Gubuktani.online</p>
 
     <p>Dalam mengisi data user anda harus mengisi data sebenar benarnya tanpa adanya rekayasa termasuk <strong>Foto Profil</strong> harus asli wajah anda karena akan berhubungan langsung pada user lain yang menyewa lahan anda dan untuk mencegah adanya penipuan.
     </p>
@@ -31,7 +31,7 @@
 
     <p>Apabila terdapat pertanyaan terkait kebijakan privasi ini atau masukan, silakan menghubungi kami melalui informasi kontak di bawah ini.</p>
 
-    <p>Gubuktani.co.id</p>
+    <p>Gubuktani.online</p>
 
     <p>Jl Manukan Rejo III Blok 1C No 8</p>
 
@@ -39,7 +39,7 @@
 
     <p>Indonesia</p>
 
-    <p>support@gubuktani.co.id</p>
+    <p>support@Gubuktani.online</p>
 
     <p>+6285-881-824-590</p>
 </div>

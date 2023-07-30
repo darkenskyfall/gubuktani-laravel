@@ -48,7 +48,7 @@ class AuthController extends Controller
         }
  
         return back()->withErrors([
-            'email' => 'Email tidak cocok dengand data kami.',
+            'email' => 'Email tidak cocok dengan data kami.',
         ])->onlyInput('email');
     }
 
